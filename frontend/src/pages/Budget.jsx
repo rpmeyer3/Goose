@@ -1,3 +1,4 @@
+import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FadeInSection, StaggerContainer, StaggerItem, TiltCard } from "../components/MagicEffects";

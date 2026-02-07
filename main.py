@@ -1,7 +1,5 @@
 import os
 import uuid
-import base64
-import traceback
 from dotenv import load_dotenv
 
 from fastapi import FastAPI, File, UploadFile, HTTPException
@@ -17,10 +15,6 @@ from pipeline import (
     classify_transactions,
     compute_metrics
 )
-
-
-
-
 
 # 1. Load environment variables from .env
 load_dotenv()
@@ -52,10 +46,6 @@ elevenlabs_client = ElevenLabs(api_key=elevenlabs_api_key) if elevenlabs_api_key
 
 if not elevenlabs_api_key:
     print("⚠️ WARNING: ELEVENLABS_API_KEY not found in .env file! Audio generation disabled.")
-
-
-
-
 
 # 4. Setup Directories and Models
 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "uploads")
@@ -172,6 +162,7 @@ async def test_audio():
                 model_id="eleven_turbo_v2_5"
             )
             # Convert audio bytes to base64 for frontend
+            import base64
             audio_data = b"".join(audio)
             audio_base64 = base64.b64encode(audio_data).decode('utf-8')
             audio_url = f"data:audio/mpeg;base64,{audio_base64}"
@@ -253,6 +244,7 @@ Based on their spending habits and question, provide personalized, practical fin
                     model_id="eleven_turbo_v2_5"
                 )
                 # Convert audio bytes to base64 for frontend
+                import base64
                 audio_data = b"".join(audio)
                 audio_base64 = base64.b64encode(audio_data).decode('utf-8')
                 audio_url = f"data:audio/mpeg;base64,{audio_base64}"
@@ -270,6 +262,7 @@ Based on their spending habits and question, provide personalized, practical fin
 
     except Exception as e:
         print(f"Chat Error: {e}")
+        import traceback
         traceback.print_exc()
         raise HTTPException(status_code=500, detail=f"Chat error: {str(e)}")
 
