@@ -1,3 +1,6 @@
+import { motion } from "framer-motion";
+import { FadeInSection, StaggerContainer, StaggerItem, TiltCard } from "../components/MagicEffects";
+
 const MEMBERS = [
   {
     name: "Igor Goncalves",
@@ -19,48 +22,84 @@ const MEMBERS = [
   },
 ];
 
+const STEPS = [
+  { icon: "📜", text: "Present thy bank statement parchment (PDF) from the Summoning page." },
+  { icon: "⚗️", text: "The backend cauldron extracts transaction runes using pdfplumber." },
+  { icon: "🎩", text: "Each transaction is classified by a Naive Bayes sorting charm trained on TF-IDF enchantments." },
+  { icon: "🔮", text: "Summary prophecies and a full ledger of transactions are conjured as JSON and rendered upon the Vault page." },
+];
+
 export default function About() {
   return (
     <div className="max-w-3xl mx-auto px-6 py-14">
-      <h1 className="text-3xl font-display font-bold mb-3 text-wizard-gold drop-shadow-[0_0_12px_rgba(212,168,67,0.4)]">
-        🔮 About Byte's Bank
-      </h1>
-      <p className="text-parchment/50 mb-10 max-w-xl font-serif italic">
-        Byte's Bank is a magical bank statement analyzer forged at UGA Hacks 11. Present
-        a parchment scroll (PDF) and the enchantment shall reveal all thy income, spending habits,
-        and category-level breakdowns — powered by arcane machine learning sorcery.
-      </p>
+      <FadeInSection>
+        <h1 className="text-3xl font-display font-bold mb-3 text-wizard-gold drop-shadow-[0_0_12px_rgba(212,168,67,0.4)]">
+          🔮 About Byte's Bank
+        </h1>
+      </FadeInSection>
 
-      <div className="mb-12">
-        <h2 className="text-xl font-display font-semibold mb-2 text-wizard-gold-light">📜 How the Magic Works</h2>
-        <ol className="list-decimal list-inside space-y-2 text-parchment/60 text-sm leading-relaxed font-serif">
-          <li>Present thy bank statement parchment (PDF) from the Summoning page.</li>
-          <li>The backend cauldron extracts transaction runes using pdfplumber.</li>
-          <li>Each transaction is classified by a Naive Bayes sorting charm trained on TF-IDF enchantments.</li>
-          <li>Summary prophecies and a full ledger of transactions are conjured as JSON and rendered upon the Vault page.</li>
-        </ol>
-      </div>
+      <FadeInSection delay={0.15}>
+        <p className="text-parchment/50 mb-10 max-w-xl font-serif italic">
+          Byte's Bank is a magical bank statement analyzer forged at UGA Hacks 11. Present
+          a parchment scroll (PDF) and the enchantment shall reveal all thy income, spending habits,
+          and category-level breakdowns — powered by arcane machine learning sorcery.
+        </p>
+      </FadeInSection>
 
-      <h2 className="text-xl font-display font-semibold mb-5 text-wizard-gold-light">⚡ The Order of Developers</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+      <FadeInSection delay={0.2}>
+        <div className="mb-12">
+          <h2 className="text-xl font-display font-semibold mb-4 text-wizard-gold-light">📜 How the Magic Works</h2>
+          <StaggerContainer className="space-y-4" stagger={0.12}>
+            {STEPS.map((step, i) => (
+              <StaggerItem key={i}>
+                <motion.div
+                  className="spell-card rounded-xl p-4 flex items-start gap-4"
+                  whileHover={{ x: 8, boxShadow: "0 0 20px rgba(212, 168, 67, 0.2)", transition: { duration: 0.2 } }}
+                >
+                  <span className="text-2xl flex-shrink-0 mt-0.5">{step.icon}</span>
+                  <div>
+                    <span className="text-wizard-gold/50 font-display text-xs font-semibold mr-2">Step {i + 1}</span>
+                    <span className="text-parchment/60 text-sm font-serif leading-relaxed">{step.text}</span>
+                  </div>
+                </motion.div>
+              </StaggerItem>
+            ))}
+          </StaggerContainer>
+        </div>
+      </FadeInSection>
+
+      <FadeInSection delay={0.1}>
+        <h2 className="text-xl font-display font-semibold mb-5 text-wizard-gold-light">⚡ The Order of Developers</h2>
+      </FadeInSection>
+
+      <StaggerContainer className="grid grid-cols-1 sm:grid-cols-3 gap-5" stagger={0.15}>
         {MEMBERS.map((m) => (
-          <div
-            key={m.name}
-            className="spell-card rounded-2xl p-6 hover:shadow-glow transition-all duration-300"
-          >
-            <div className="h-12 w-12 rounded-full bg-wizard-gold/15 text-wizard-gold flex items-center justify-center font-bold text-2xl mb-4 border border-wizard-gold/30">
-              {m.emoji}
-            </div>
-            <h3 className="font-display font-semibold text-base text-parchment">{m.name}</h3>
-            <p className="text-xs text-wizard-gold font-display font-medium mb-2">{m.role}</p>
-            <p className="text-sm text-parchment/50 leading-relaxed font-serif">{m.desc}</p>
-          </div>
+          <StaggerItem key={m.name}>
+            <TiltCard className="h-full">
+              <div className="spell-card rounded-2xl p-6 h-full">
+                <motion.div
+                  className="h-14 w-14 rounded-full bg-wizard-gold/15 text-wizard-gold flex items-center justify-center font-bold text-3xl mb-4 border border-wizard-gold/30"
+                  whileHover={{ scale: 1.2, rotate: 10, transition: { type: "spring" } }}
+                >
+                  {m.emoji}
+                </motion.div>
+                <h3 className="font-display font-semibold text-base text-parchment">{m.name}</h3>
+                <p className="text-xs text-wizard-gold font-display font-medium mb-2">{m.role}</p>
+                <p className="text-sm text-parchment/50 leading-relaxed font-serif">{m.desc}</p>
+              </div>
+            </TiltCard>
+          </StaggerItem>
         ))}
-      </div>
+      </StaggerContainer>
 
-      <div className="mt-12 pt-8 border-t border-wizard-gold/20 text-sm text-parchment/30 font-serif italic">
-        Forged with React, FastAPI, scikit-learn, pdfplumber, and Tailwind CSS — under the light of a full moon. 🌕
-      </div>
+      <FadeInSection delay={0.3}>
+        <motion.div
+          className="mt-12 pt-8 border-t border-wizard-gold/20 text-sm text-parchment/30 font-serif italic text-center"
+          whileHover={{ color: "rgba(212, 168, 67, 0.5)", transition: { duration: 0.3 } }}
+        >
+          Forged with React, FastAPI, scikit-learn, pdfplumber, and Tailwind CSS — under the light of a full moon. 🌕
+        </motion.div>
+      </FadeInSection>
     </div>
   );
 }
