@@ -5,7 +5,8 @@ from dotenv import load_dotenv
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
-from google import genai
+from pydantic import BaseModel
+import google.generativeai as genai
 from pipeline import (
     load_model,
     extract_text_from_pdf,
@@ -36,7 +37,7 @@ api_key = os.getenv("GEMINI_API_KEY")
 if not api_key:
     print("⚠️ WARNING: GEMINI_API_KEY not found in .env file!")
 
-client = genai.Client(api_key=api_key)
+genai.configure(api_key=api_key)
 
 # 4. Setup Directories and Models
 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "uploads")
@@ -46,6 +47,12 @@ model, vectorizer = load_model()
 
 # Simple in-memory cache to avoid duplicate Gemini calls
 _advisor_cache = {}
+
+
+class ChatRequest(BaseModel):
+    message: str
+    spending_data: dict = None
+    transaction_count: int = 0
 
 
 @app.get("/")
@@ -102,10 +109,7 @@ async def analyze_statement(file: UploadFile = File(...)):
                     f"Do not use markup!"
                 )
 
-                response = client.models.generate_content(
-                    model="gemini-2.5-flash",
-                    contents=prompt
-                )
+                response = genai.GenerativeModel("gemini-2.5-flash").generate_content(prompt)
 
                 if response and response.text:
                     advisor_text = response.text
@@ -129,6 +133,56 @@ async def analyze_statement(file: UploadFile = File(...)):
         # Cleanup temp file
         if os.path.exists(filepath):
             os.remove(filepath)
+
+
+@app.post("/api/chat")
+async def chat(request: ChatRequest):
+    """
+    Chat endpoint for AI Financial Advisor powered by Gemini
+    """
+    if not request.message:
+        raise HTTPException(status_code=400, detail="Message cannot be empty")
+
+    try:
+        # Build context from spending data if available
+        context = ""
+        if request.spending_data:
+            context = f"""
+The user's spending analysis:
+- Total spent: ${request.spending_data.get('total_spent', 0):.2f}
+- Remaining: ${request.spending_data.get('left_over', 0):.2f}
+- Total income: ${request.spending_data.get('total_income', 0):.2f}
+- Daily average: ${request.spending_data.get('daily_avg_spending', 0):.2f}
+- Most spent category: {request.spending_data.get('category_most_spent', 'N/A').replace('_', ' ')}
+- Least spent category: {request.spending_data.get('category_least_spent', 'N/A').replace('_', ' ')}
+- Transaction count: {request.transaction_count}
+
+Provide personalized, encouraging financial advice based on their spending patterns.
+"""
+
+        prompt = f"""You are a professional yet approachable Financial Advisor. Your goal is to provide practical, actionable financial guidance.
+Your tone should be friendly and encouraging, but focus on real financial insights and strategies.
+Keep responses concise (2-3 sentences) unless the user asks for more detail.
+Provide specific, measurable recommendations when possible.
+Use minimal emojis - only 1-2 if relevant.
+
+User Context:{context}
+
+User's Question: {request.message}
+
+Based on their spending habits and question, provide personalized, practical financial advice with specific actionable steps they can take."""
+
+        # Call Gemini API
+        response = genai.GenerativeModel("gemini-2.5-flash").generate_content(prompt)
+
+        if response and response.text:
+            return JSONResponse(content={"response": response.text})
+        else:
+            return JSONResponse(content={"response": "The spell misfired! Please try again. 🔮"})
+
+    except Exception as e:
+        print(f"Chat Error: {e}")
+        raise HTTPException(status_code=500, detail=f"Chat error: {str(e)}")
 
 
 if __name__ == "__main__":

@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import { MagicParticles, Parallax3DBackground } from "./components/MagicEffects";
 import Home from "./pages/Home";
 import Budget from "./pages/Budget";
+import Chat from "./pages/Chat";
 import About from "./pages/About";
 
 const pageVariants = {
@@ -41,6 +42,7 @@ export default function App() {
             <Routes location={location}>
               <Route path="/" element={<Home setAnalysisData={setAnalysisData} />} />
               <Route path="/budget" element={<Budget data={analysisData} />} />
+              <Route path="/chat" element={<Chat data={analysisData} />} />
               <Route path="/about" element={<About />} />
             </Routes>
           </motion.div>

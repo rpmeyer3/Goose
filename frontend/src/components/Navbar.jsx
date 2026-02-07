@@ -22,6 +22,7 @@ export default function Navbar() {
   const navItems = [
     { to: "/", label: "🪄 Summon" },
     { to: "/budget", label: "📜 Vault" },
+    { to: "/chat", label: "💬 Advisor" },
     { to: "/about", label: "🔮 Oracle" },
   ];
 
