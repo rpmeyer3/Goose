@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="073f56ce-7492-435d-89ba-89ee0e75614a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/LoadingOverlay.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/render.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/render.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/App.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/App.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,7 +95,7 @@
       <workItem from="1770433602782" duration="10295000" />
       <workItem from="1770477212943" duration="3880000" />
       <workItem from="1770481120169" duration="639000" />
-      <workItem from="1770487978520" duration="1051000" />
+      <workItem from="1770487978520" duration="1731000" />
     </task>
     <servers />
   </component>

@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom"; // Added useNavigate
 import { AnimatePresence, motion } from "framer-motion";
+
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { MagicParticles, Parallax3DBackground } from "./components/MagicEffects";
+import LoadingOverlay from "./components/LoadingOverlay";
+
 import Home from "./pages/Home";
 import Budget from "./pages/Budget";
 import Chat from "./pages/Chat";
@@ -20,7 +23,9 @@ const pageVariants = {
 
 export default function App() {
   const [analysisData, setAnalysisData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false); // Global loading state
   const location = useLocation();
+  const navigate = useNavigate(); // Hook for navigation
   const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
 
   useEffect(() => {
@@ -29,11 +34,44 @@ export default function App() {
     return () => window.removeEventListener("resize", onResize);
   }, []);
 
+  /**
+   * Centralized File Upload Handler
+   * This is passed to the Home page to trigger the loading screen
+   */
+  const handleFileUpload = async (file) => {
+    setIsLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const response = await fetch("http://localhost:8000/api/analyze-statement", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) throw new Error("Vault access denied");
+
+      const result = await response.json();
+      setAnalysisData(result); // Store data globally
+      navigate("/budget");     // Redirect to dashboard
+    } catch (error) {
+      console.error("Vault Access Failed:", error);
+      // You could add a toast notification here
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col bg-dark-wizard relative overflow-x-hidden wand-cursor-default">
+      {/* 1. The Global Loading Screen */}
+      <LoadingOverlay isLoading={isLoading} />
+
       {!isMobile && <Parallax3DBackground />}
       {!isMobile && <MagicParticles count={25} />}
+
       <Navbar />
+
       <main className="flex-1 relative z-10">
         <AnimatePresence mode="wait">
           <motion.div
@@ -47,7 +85,18 @@ export default function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
               <Route path="/auth/callback" element={<AuthCallback />} />
-              <Route path="/" element={<Home setAnalysisData={setAnalysisData} />} />
+
+              {/* Pass the handler to Home */}
+              <Route
+                path="/"
+                element={
+                  <Home
+                    setAnalysisData={setAnalysisData}
+                    onUpload={handleFileUpload}
+                  />
+                }
+              />
+
               <Route
                 path="/budget"
                 element={
