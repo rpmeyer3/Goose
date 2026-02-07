@@ -4,9 +4,17 @@ import pickle
 import pdfplumber
 import pandas as pd
 from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "uploads")
 MODEL_PATH = os.path.join(os.path.dirname(__file__), "models", "naive_bayes_model.pkl")
