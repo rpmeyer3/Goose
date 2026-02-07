@@ -1,60 +1,65 @@
 const MEMBERS = [
   {
     name: "Igor Goncalves",
-    role: "Machine Learning",
-    desc: "Built the Naive Bayes classification pipeline that categorizes every transaction.",
+    role: "Dark Arts of Data",
+    desc: "Conjured the Naive Bayes classification enchantment that sorts every Galleon into its rightful category.",
+    emoji: "🧙‍♂️",
   },
   {
     name: "Jordan Delp",
-    role: "Backend Engineer",
-    desc: "Designed the FastAPI server, PDF ingestion, and data processing pipeline.",
+    role: "Keeper of the Backend",
+    desc: "Forged the FastAPI cauldron, PDF extraction spell, and the data processing incantations.",
+    emoji: "⚗️",
   },
   {
     name: "Ryan Meyer",
-    role: "Frontend Engineer",
-    desc: "Created the React UI, upload flow, and budget visualization dashboard.",
+    role: "Charm of the Interface",
+    desc: "Enchanted the React scroll-face, summoning flow, and vault visualization chamber.",
+    emoji: "✨",
   },
 ];
 
 export default function About() {
   return (
     <div className="max-w-3xl mx-auto px-6 py-14">
-      <h1 className="text-3xl font-bold mb-3">About Impendios</h1>
-      <p className="text-gray-500 mb-10 max-w-xl">
-        Impendios is a bank statement analyzer built at UGA Hacks 11. Upload a
-        PDF statement and get instant insight into your income, spending habits,
-        and category-level breakdowns — powered by machine learning.
+      <h1 className="text-3xl font-display font-bold mb-3 text-wizard-gold drop-shadow-[0_0_12px_rgba(212,168,67,0.4)]">
+        🔮 About Gringotts Ledger
+      </h1>
+      <p className="text-parchment/50 mb-10 max-w-xl font-serif italic">
+        Gringotts Ledger is a magical bank statement analyzer forged at UGA Hacks 11. Present
+        a parchment scroll (PDF) and the enchantment shall reveal all thy income, spending habits,
+        and category-level breakdowns — powered by arcane machine learning sorcery.
       </p>
 
       <div className="mb-12">
-        <h2 className="text-xl font-semibold mb-2">How It Works</h2>
-        <ol className="list-decimal list-inside space-y-2 text-gray-600 text-sm leading-relaxed">
-          <li>Upload a bank statement PDF from the Home page.</li>
-          <li>The backend extracts transaction text using pdfplumber.</li>
-          <li>Each transaction is classified into a spending category by a Naive Bayes model trained on TF-IDF features.</li>
-          <li>Summary metrics and a full transaction breakdown are returned as JSON and rendered on the Budget page.</li>
+        <h2 className="text-xl font-display font-semibold mb-2 text-wizard-gold-light">📜 How the Magic Works</h2>
+        <ol className="list-decimal list-inside space-y-2 text-parchment/60 text-sm leading-relaxed font-serif">
+          <li>Present thy bank statement parchment (PDF) from the Summoning page.</li>
+          <li>The backend cauldron extracts transaction runes using pdfplumber.</li>
+          <li>Each transaction is classified by a Naive Bayes sorting charm trained on TF-IDF enchantments.</li>
+          <li>Summary prophecies and a full ledger of transactions are conjured as JSON and rendered upon the Vault page.</li>
         </ol>
       </div>
 
-      <h2 className="text-xl font-semibold mb-5">The Team</h2>
+      <h2 className="text-xl font-display font-semibold mb-5 text-wizard-gold-light">⚡ The Order of Developers</h2>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
         {MEMBERS.map((m) => (
           <div
             key={m.name}
-            className="rounded-2xl bg-white border border-gray-100 shadow-sm p-6"
+            className="spell-card rounded-2xl p-6 hover:shadow-glow transition-all duration-300"
           >
-            <div className="h-12 w-12 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center font-bold text-lg mb-4">
-              {m.name.split(" ").map((n) => n[0]).join("")}
+            <div className="h-12 w-12 rounded-full bg-wizard-gold/15 text-wizard-gold flex items-center justify-center font-bold text-2xl mb-4 border border-wizard-gold/30">
+              {m.emoji}
             </div>
-            <h3 className="font-semibold text-base">{m.name}</h3>
-            <p className="text-xs text-indigo-600 font-medium mb-2">{m.role}</p>
-            <p className="text-sm text-gray-500 leading-relaxed">{m.desc}</p>
+            <h3 className="font-display font-semibold text-base text-parchment">{m.name}</h3>
+            <p className="text-xs text-wizard-gold font-display font-medium mb-2">{m.role}</p>
+            <p className="text-sm text-parchment/50 leading-relaxed font-serif">{m.desc}</p>
           </div>
         ))}
       </div>
 
-      <div className="mt-12 pt-8 border-t border-gray-200 text-sm text-gray-400">
-        Built with React, FastAPI, scikit-learn, pdfplumber, and Tailwind CSS.
+      <div className="mt-12 pt-8 border-t border-wizard-gold/20 text-sm text-parchment/30 font-serif italic">
+        Forged with React, FastAPI, scikit-learn, pdfplumber, and Tailwind CSS — under the light of a full moon. 🌕
       </div>
     </div>
   );

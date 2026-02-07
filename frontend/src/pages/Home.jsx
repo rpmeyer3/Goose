@@ -56,11 +56,12 @@ export default function Home({ setAnalysisData }) {
 
   return (
     <div className="max-w-2xl mx-auto px-6 py-20">
-      <h1 className="text-3xl font-bold text-center mb-2">
-        Analyze Your Statement
+      <h1 className="text-4xl font-display font-bold text-center mb-2 text-wizard-gold drop-shadow-[0_0_12px_rgba(212,168,67,0.4)]">
+        🪄 Cast Your Scroll
       </h1>
-      <p className="text-center text-gray-500 mb-10">
-        Upload a bank statement PDF to get a full spending breakdown.
+      <p className="text-center text-parchment/60 mb-10 font-serif italic">
+        Present thy bank statement parchment and the enchantment shall reveal all hidden
+        expenditures within.
       </p>
 
       <div
@@ -71,10 +72,10 @@ export default function Home({ setAnalysisData }) {
         onDragLeave={() => setDragging(false)}
         onDrop={onDrop}
         onClick={() => inputRef.current.click()}
-        className={`border-2 border-dashed rounded-2xl p-14 text-center cursor-pointer transition-colors ${
+        className={`spell-card border-2 border-dashed rounded-2xl p-14 text-center cursor-pointer transition-all duration-500 ${
           dragging
-            ? "border-indigo-500 bg-indigo-50"
-            : "border-gray-300 hover:border-indigo-400 bg-white"
+            ? "border-wizard-gold bg-wizard-gold/10 shadow-glow-lg"
+            : "border-wizard-gold/30 hover:border-wizard-gold/60 hover:shadow-glow"
         }`}
       >
         <input
@@ -85,42 +86,30 @@ export default function Home({ setAnalysisData }) {
           onChange={(e) => handleFile(e.target.files[0])}
         />
 
-        <svg
-          className="mx-auto mb-4 h-12 w-12 text-gray-400"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          strokeWidth={1.5}
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            d="M12 16v-8m0 0l-3 3m3-3l3 3M3.75 19.5h16.5a1.5 1.5 0 001.5-1.5V6a1.5 1.5 0 00-1.5-1.5H3.75A1.5 1.5 0 002.25 6v12a1.5 1.5 0 001.5 1.5z"
-          />
-        </svg>
+        <div className="text-5xl mb-4 animate-float">📜</div>
 
         {file ? (
-          <p className="text-indigo-600 font-medium">{file.name}</p>
+          <p className="text-wizard-gold font-display font-semibold">{file.name}</p>
         ) : (
           <>
-            <p className="text-gray-600 font-medium">
-              Drag & drop your PDF here
+            <p className="text-parchment/80 font-display font-semibold">
+              Drag & drop your parchment here
             </p>
-            <p className="text-sm text-gray-400 mt-1">or click to browse</p>
+            <p className="text-sm text-parchment/40 mt-1 font-serif italic">or click to summon from thy archives</p>
           </>
         )}
       </div>
 
       {error && (
-        <p className="mt-4 text-sm text-red-500 text-center">{error}</p>
+        <p className="mt-4 text-sm text-wizard-crimson text-center font-serif">⚠️ {error}</p>
       )}
 
       <button
         onClick={upload}
         disabled={!file || uploading}
-        className="mt-8 w-full py-3 rounded-xl font-semibold text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+        className="mt-8 w-full py-3 rounded-xl font-display font-bold tracking-wider text-dark-wizard bg-gradient-to-r from-wizard-gold to-wizard-gold-light hover:from-wizard-gold-light hover:to-wizard-gold disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-300 shadow-glow hover:shadow-glow-lg"
       >
-        {uploading ? "Analyzing…" : "Upload & Analyze"}
+        {uploading ? "✨ Casting Spell…" : "⚡ Revelio!"}
       </button>
     </div>
   );

@@ -1,22 +1,22 @@
 import { useNavigate } from "react-router-dom";
 
 const COLORS = [
-  "bg-rose-100 text-rose-700",
-  "bg-sky-100 text-sky-700",
-  "bg-amber-100 text-amber-700",
-  "bg-emerald-100 text-emerald-700",
-  "bg-violet-100 text-violet-700",
-  "bg-orange-100 text-orange-700",
-  "bg-teal-100 text-teal-700",
-  "bg-pink-100 text-pink-700",
+  "bg-wizard-crimson/20 text-red-300",
+  "bg-sky-900/30 text-sky-300",
+  "bg-wizard-gold/20 text-wizard-gold",
+  "bg-wizard-emerald/20 text-emerald-300",
+  "bg-violet-900/30 text-violet-300",
+  "bg-orange-900/30 text-orange-300",
+  "bg-teal-900/30 text-teal-300",
+  "bg-pink-900/30 text-pink-300",
 ];
 
 function StatCard({ label, value, accent, sub }) {
   return (
-    <div className="rounded-2xl bg-white shadow-sm border border-gray-100 p-6">
-      <p className="text-sm text-gray-500 mb-1">{label}</p>
-      <p className={`text-2xl font-bold ${accent}`}>{value}</p>
-      {sub && <p className="text-xs text-gray-400 mt-1">{sub}</p>}
+    <div className="spell-card rounded-2xl p-6">
+      <p className="text-sm text-parchment/50 mb-1 font-serif">{label}</p>
+      <p className={`text-2xl font-display font-bold ${accent}`}>{value}</p>
+      {sub && <p className="text-xs text-parchment/40 mt-1">{sub}</p>}
     </div>
   );
 }
@@ -31,15 +31,16 @@ export default function Budget({ data }) {
   if (!data) {
     return (
       <div className="max-w-2xl mx-auto px-6 py-20 text-center">
-        <h2 className="text-2xl font-bold mb-3">No Data Yet</h2>
-        <p className="text-gray-500 mb-8">
-          Upload a bank statement first to see your budget breakdown.
+        <div className="text-6xl mb-4">🔮</div>
+        <h2 className="text-2xl font-display font-bold mb-3 text-wizard-gold">The Vault is Empty</h2>
+        <p className="text-parchment/50 mb-8 font-serif italic">
+          No parchments have been enchanted yet. Present a scroll to unlock thy vault.
         </p>
         <button
           onClick={() => navigate("/")}
-          className="px-6 py-3 rounded-xl font-semibold text-white bg-indigo-600 hover:bg-indigo-700 transition-colors"
+          className="px-6 py-3 rounded-xl font-display font-bold tracking-wider text-dark-wizard bg-gradient-to-r from-wizard-gold to-wizard-gold-light hover:from-wizard-gold-light hover:to-wizard-gold transition-all duration-300 shadow-glow hover:shadow-glow-lg"
         >
-          Go to Upload
+          🪄 Summon a Scroll
         </button>
       </div>
     );
@@ -60,46 +61,48 @@ export default function Budget({ data }) {
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-14">
-      <h1 className="text-3xl font-bold mb-8">Budget Overview</h1>
+      <h1 className="text-3xl font-display font-bold mb-8 text-wizard-gold drop-shadow-[0_0_12px_rgba(212,168,67,0.4)]">
+        📜 Vault Overview
+      </h1>
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <StatCard
-          label="Total Income"
+          label="Galleons Earned"
           value={fmt(metrics.total_income)}
-          accent="text-emerald-600"
+          accent="text-emerald-400"
         />
         <StatCard
-          label="Total Spent"
+          label="Galleons Spent"
           value={fmt(metrics.total_spent)}
-          accent="text-rose-600"
+          accent="text-red-400"
         />
         <StatCard
-          label="Left Over"
+          label="Vault Remainder"
           value={fmt(leftOver)}
-          accent={leftOver >= 0 ? "text-emerald-600" : "text-rose-600"}
+          accent={leftOver >= 0 ? "text-emerald-400" : "text-red-400"}
         />
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
         {metrics.category_most_spent && (
           <StatCard
-            label="Most Spent Category"
+            label="Most Bewitching Category"
             value={metrics.category_most_spent}
-            accent="text-rose-600"
+            accent="text-red-400"
             sub={fmt(metrics.category_spending[metrics.category_most_spent])}
           />
         )}
         {metrics.category_least_spent && (
           <StatCard
-            label="Least Spent Category"
+            label="Most Frugal Enchantment"
             value={metrics.category_least_spent}
-            accent="text-sky-600"
+            accent="text-sky-400"
             sub={fmt(metrics.category_spending[metrics.category_least_spent])}
           />
         )}
       </div>
 
-      <h2 className="text-xl font-semibold mb-5">Spending by Category</h2>
+      <h2 className="text-xl font-display font-semibold mb-5 text-wizard-gold-light">Spending by Enchantment</h2>
 
       <div className="space-y-4 mb-12">
         {categories.map(([category, amount], i) => {
@@ -110,17 +113,17 @@ export default function Budget({ data }) {
             <div key={category}>
               <div className="flex items-center justify-between mb-1">
                 <span
-                  className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ${color}`}
+                  className={`text-xs font-display font-semibold px-2.5 py-0.5 rounded-full ${color}`}
                 >
                   {category}
                 </span>
-                <span className="text-sm font-medium text-gray-700">
+                <span className="text-sm font-medium text-parchment/70">
                   {fmt(amount)}
                 </span>
               </div>
-              <div className="w-full bg-gray-100 rounded-full h-2.5">
+              <div className="w-full bg-wizard-slate rounded-full h-2.5">
                 <div
-                  className="h-2.5 rounded-full bg-indigo-500 transition-all"
+                  className="h-2.5 rounded-full bg-gradient-to-r from-wizard-gold to-wizard-gold-light transition-all shadow-glow"
                   style={{ width: `${pct}%` }}
                 />
               </div>
@@ -129,8 +132,8 @@ export default function Budget({ data }) {
         })}
 
         {categories.length === 0 && (
-          <p className="text-gray-400 text-center py-8">
-            No spending categories found.
+          <p className="text-parchment/40 text-center py-8 font-serif italic">
+            No enchantment categories detected in thy scroll.
           </p>
         )}
       </div>
@@ -161,8 +164,8 @@ export default function Budget({ data }) {
 
         return (
           <>
-            <h2 className="text-xl font-semibold mb-5">Daily Spending</h2>
-            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-12 overflow-hidden">
+            <h2 className="text-xl font-display font-semibold mb-5 text-wizard-gold-light">Daily Enchantments</h2>
+            <div className="spell-card rounded-2xl p-6 mb-12 overflow-hidden">
               <svg
                 viewBox={`0 0 ${CHART_W} ${CHART_H}`}
                 className="w-full h-auto"
@@ -171,8 +174,8 @@ export default function Budget({ data }) {
                 {/* gradient fill under line */}
                 <defs>
                   <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#6366f1" stopOpacity="0.35" />
-                    <stop offset="100%" stopColor="#6366f1" stopOpacity="0.03" />
+                    <stop offset="0%" stopColor="#d4a843" stopOpacity="0.4" />
+                    <stop offset="100%" stopColor="#d4a843" stopOpacity="0.03" />
                   </linearGradient>
                 </defs>
 
@@ -181,8 +184,8 @@ export default function Budget({ data }) {
                   const y = PAD.top + plotH - (v / niceMax) * plotH;
                   return (
                     <g key={v}>
-                      <line x1={PAD.left} x2={PAD.left + plotW} y1={y} y2={y} stroke="#e5e7eb" strokeWidth="1" />
-                      <text x={PAD.left - 8} y={y + 3} textAnchor="end" fontSize="10" fill="#9ca3af">
+                      <line x1={PAD.left} x2={PAD.left + plotW} y1={y} y2={y} stroke="#3d3566" strokeWidth="1" />
+                      <text x={PAD.left - 8} y={y + 3} textAnchor="end" fontSize="10" fill="#8b7eb8">
                         ${v}
                       </text>
                     </g>
@@ -190,16 +193,16 @@ export default function Budget({ data }) {
                 })}
 
                 {/* Y-axis line */}
-                <line x1={PAD.left} x2={PAD.left} y1={PAD.top} y2={PAD.top + plotH} stroke="#d1d5db" strokeWidth="1" />
+                <line x1={PAD.left} x2={PAD.left} y1={PAD.top} y2={PAD.top + plotH} stroke="#5a4f8a" strokeWidth="1" />
 
                 {/* X-axis line */}
-                <line x1={PAD.left} x2={PAD.left + plotW} y1={PAD.top + plotH} y2={PAD.top + plotH} stroke="#d1d5db" strokeWidth="1" />
+                <line x1={PAD.left} x2={PAD.left + plotW} y1={PAD.top + plotH} y2={PAD.top + plotH} stroke="#5a4f8a" strokeWidth="1" />
 
                 {/* filled area */}
                 <path d={areaD} fill="url(#areaGrad)" />
 
                 {/* line */}
-                <path d={lineD} fill="none" stroke="#6366f1" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
+                <path d={lineD} fill="none" stroke="#d4a843" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
 
                 {/* dots + hover targets */}
                 {points.map((p) => {
@@ -209,11 +212,11 @@ export default function Budget({ data }) {
                       {/* invisible wider hit area */}
                       <circle cx={p.x} cy={p.y} r="10" fill="transparent" className="cursor-pointer" />
                       {/* visible dot */}
-                      <circle cx={p.x} cy={p.y} r="4" fill="#6366f1" stroke="white" strokeWidth="2" />
+                      <circle cx={p.x} cy={p.y} r="4" fill="#d4a843" stroke="#0d0221" strokeWidth="2" />
                       {/* tooltip on hover */}
                       <g className="opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                        <rect x={p.x - 36} y={p.y - 32} width="72" height="20" rx="6" fill="#1e1b4b" />
-                        <text x={p.x} y={p.y - 18} textAnchor="middle" fontSize="10" fill="white" fontWeight="600">
+                        <rect x={p.x - 36} y={p.y - 32} width="72" height="20" rx="6" fill="#2d1b69" stroke="#d4a843" strokeWidth="0.5" />
+                        <text x={p.x} y={p.y - 18} textAnchor="middle" fontSize="10" fill="#f0d78c" fontWeight="600">
                           {fmt(p.amount)}
                         </text>
                       </g>
@@ -224,7 +227,6 @@ export default function Budget({ data }) {
                 {/* X-axis date labels */}
                 {points.map((p, i) => {
                   const shortDate = p.date.replace(/^0?(\d+)\/0?(\d+)\/\d+$/, "$1/$2");
-                  // show every label if ≤15 points, otherwise every other
                   const showLabel = dailyEntries.length <= 15 || i % 2 === 0;
                   if (!showLabel) return null;
                   return (
@@ -234,7 +236,7 @@ export default function Budget({ data }) {
                       y={PAD.top + plotH + 16}
                       textAnchor="middle"
                       fontSize="9"
-                      fill="#9ca3af"
+                      fill="#8b7eb8"
                       transform={`rotate(-45, ${p.x}, ${PAD.top + plotH + 16})`}
                     >
                       {shortDate}
@@ -247,11 +249,11 @@ export default function Budget({ data }) {
         );
       })()}
 
-      <div className="pt-8 border-t border-gray-200">
-        <h2 className="text-xl font-semibold mb-4">Transactions</h2>
-        <div className="overflow-x-auto rounded-xl border border-gray-200">
+      <div className="pt-8 border-t border-wizard-gold/20">
+        <h2 className="text-xl font-display font-semibold mb-4 text-wizard-gold-light">📖 Transaction Ledger</h2>
+        <div className="overflow-x-auto rounded-xl border border-wizard-gold/20">
           <table className="w-full text-sm text-left">
-            <thead className="bg-gray-50 text-gray-500 uppercase text-xs">
+            <thead className="bg-wizard-deep text-wizard-gold/70 uppercase text-xs font-display tracking-wider">
               <tr>
                 <th className="px-4 py-3">Date</th>
                 <th className="px-4 py-3">Description</th>
@@ -259,19 +261,19 @@ export default function Budget({ data }) {
                 <th className="px-4 py-3 text-right">Amount</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-wizard-gold/10">
               {data.transactions.map((tx, i) => (
-                <tr key={i} className="hover:bg-gray-50">
-                  <td className="px-4 py-3 whitespace-nowrap">{tx.date}</td>
-                  <td className="px-4 py-3">{tx.description}</td>
+                <tr key={i} className="hover:bg-wizard-purple/30 transition-colors">
+                  <td className="px-4 py-3 whitespace-nowrap text-parchment/70">{tx.date}</td>
+                  <td className="px-4 py-3 text-parchment/80">{tx.description}</td>
                   <td className="px-4 py-3">
-                    <span className="text-xs font-medium px-2 py-0.5 rounded-full bg-gray-100 text-gray-600">
+                    <span className="text-xs font-display font-medium px-2 py-0.5 rounded-full bg-wizard-slate text-wizard-gold/80">
                       {tx.category}
                     </span>
                   </td>
                   <td
                     className={`px-4 py-3 text-right font-medium ${
-                      tx.amount >= 0 ? "text-emerald-600" : "text-rose-600"
+                      tx.amount >= 0 ? "text-emerald-400" : "text-red-400"
                     }`}
                   >
                     {fmt(tx.amount)}

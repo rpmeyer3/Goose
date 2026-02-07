@@ -2,27 +2,27 @@ import { NavLink } from "react-router-dom";
 
 export default function Navbar() {
   const link = ({ isActive }) =>
-    `px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+    `px-4 py-2 rounded-lg text-sm font-display font-semibold tracking-wide transition-all duration-300 ${
       isActive
-        ? "bg-indigo-600 text-white"
-        : "text-gray-600 hover:bg-gray-200"
+        ? "bg-wizard-gold/20 text-wizard-gold border border-wizard-gold/40 shadow-glow"
+        : "text-parchment/70 hover:text-wizard-gold hover:bg-wizard-purple/50"
     }`;
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-gray-200">
+    <nav className="sticky top-0 z-50 bg-dark-wizard/90 backdrop-blur-md border-b border-wizard-gold/20">
       <div className="max-w-5xl mx-auto flex items-center justify-between px-6 py-3">
-        <span className="text-lg font-bold tracking-tight text-indigo-600">
-          Impendios
+        <span className="text-xl font-display font-bold tracking-widest text-wizard-gold drop-shadow-[0_0_8px_rgba(212,168,67,0.5)]">
+          ⚡ Gringotts Ledger
         </span>
         <div className="flex gap-2">
           <NavLink to="/" className={link}>
-            Upload
+            🪄 Summon
           </NavLink>
           <NavLink to="/budget" className={link}>
-            Budget
+            📜 Vault
           </NavLink>
           <NavLink to="/about" className={link}>
-            About
+            🔮 Oracle
           </NavLink>
         </div>
       </div>

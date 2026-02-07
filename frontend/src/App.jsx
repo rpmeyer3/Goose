@@ -9,7 +9,7 @@ export default function App() {
   const [analysisData, setAnalysisData] = useState(null);
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-dark-wizard stars-bg">
       <Navbar />
       <main className="flex-1">
         <Routes>
