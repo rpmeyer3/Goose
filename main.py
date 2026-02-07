@@ -19,10 +19,14 @@ load_dotenv()
 
 app = FastAPI()
 
-# 2. Configure CORS - Removed trailing slash for React Vite compatibility
+# Allow the frontend origin — set FRONTEND_URL env var in production
+frontend_url = os.environ.get("FRONTEND_URL", "http://localhost:5173").rstrip("/")
+origins = [frontend_url]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=origins,
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_methods=["*"],
     allow_headers=["*"],
 )
