@@ -1,35 +1,5 @@
-import re
-import os
-import pickle
-import pdfplumber
-import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.pipeline import Pipeline
-
-# from igor-training-data import WIZARDING_TRAINING_DATA
-
-MODELS_DIR = os.path.join(os.path.dirname(__file__), "models")
-MODEL_PATH = os.path.join(MODELS_DIR, "naive_bayes_model.pkl")
-VECTORIZER_PATH = os.path.join(MODELS_DIR, "vectorizer.pkl")
-
-# Updated categories for wizarding world
-CATEGORIES = [
-    "potions_ingredients",
-    "magical_supplies",
-    "books_education",
-    "food_dining",
-    "clothing_robes",
-    "transportation",
-    "entertainment",
-    "healthcare",
-    "pets_familiars",
-    "utilities_services",
-    "defense_equipment"
-]
-
-# Wizarding world training data
-TRAINING_DATA = [
+# Training data: (description, category)
+WIZARDING_TRAINING_DATA = [
     # Potions & Ingredients
     ("Apothecary Dragon Scale purchase", "potions_ingredients"),
     ("Slug & Jiggers Apothecary", "potions_ingredients"),
@@ -80,7 +50,7 @@ TRAINING_DATA = [
     ("Library late fee Hogwarts", "books_education"),
     ("Tutoring sessions arithmancy", "books_education"),
     ("Study materials N.E.W.T. level", "books_education"),
-    ("Fantastic Beasts and Where to Find Them", "books_education"),
+    ("Fantastic Beasts and Where to Find Them", "book_education")
 
     # Food & Dining
     ("Honeydukes Sweet Shop", "food_dining"),
@@ -277,116 +247,3 @@ CATEGORY_INFO = {
         "icon": "🛡️"
     }
 }
-
-
-def clean_text(text: str) -> str:
-    text = text.lower().strip()
-    text = re.sub(r"[^a-z\s]", "", text)
-    return re.sub(r"\s+", " ", text).strip()
-
-
-def extract_text_from_pdf(path: str) -> str:
-    pages = []
-    with pdfplumber.open(path) as pdf:
-        for page in pdf.pages:
-            content = page.extract_text()
-            if content:
-                pages.append(content)
-    return "\n".join(pages).strip()
-
-
-def parse_transactions(raw_text: str) -> pd.DataFrame:
-    rows = []
-    for line in raw_text.split("\n"):
-        parts = line.split()
-        if len(parts) < 3:
-            continue
-        date = parts[0]
-        try:
-            amount = float(parts[-1].replace(",", "").replace("$", ""))
-        except ValueError:
-            continue
-        description = " ".join(parts[1:-1])
-        rows.append({"date": date, "description": description, "amount": amount})
-    return pd.DataFrame(rows)
-
-
-def train_model():
-    os.makedirs(MODELS_DIR, exist_ok=True)
-    descriptions = [clean_text(d) for d, _ in TRAINING_DATA]
-    labels = [l for _, l in TRAINING_DATA]
-    vectorizer = TfidfVectorizer(ngram_range=(1, 2), max_features=5000)
-    X = vectorizer.fit_transform(descriptions)
-    model = MultinomialNB(alpha=0.1)
-    model.fit(X, labels)
-    with open(MODEL_PATH, "wb") as f:
-        pickle.dump(model, f)
-    with open(VECTORIZER_PATH, "wb") as f:
-        pickle.dump(vectorizer, f)
-    return model, vectorizer
-
-
-def load_model():
-    if not os.path.exists(MODEL_PATH) or not os.path.exists(VECTORIZER_PATH):
-        return train_model()
-    with open(MODEL_PATH, "rb") as f:
-        model = pickle.load(f)
-    with open(VECTORIZER_PATH, "rb") as f:
-        vectorizer = pickle.load(f)
-    return model, vectorizer
-
-
-def classify_transactions(df: pd.DataFrame, model, vectorizer) -> pd.DataFrame:
-    if df.empty:
-        df["category"] = []
-        return df
-    cleaned = df["description"].apply(clean_text)
-    features = vectorizer.transform(cleaned)
-    df["category"] = model.predict(features)
-    return df
-
-
-def compute_metrics(df: pd.DataFrame) -> dict:
-    income = df.loc[df["amount"] > 0, "amount"].sum()
-    spent = df.loc[df["amount"] < 0, "amount"].sum()
-    category_spending = (
-        df.loc[df["amount"] < 0]
-        .groupby("category")["amount"]
-        .sum()
-        .abs()
-        .to_dict()
-    )
-    daily_spending = (
-        df.loc[df["amount"] < 0]
-        .groupby("date")["amount"]
-        .sum()
-        .abs()
-        .to_dict()
-    )
-    most_spent = max(category_spending, key=category_spending.get) if category_spending else None
-    least_spent = min(category_spending, key=category_spending.get) if category_spending else None
-    return {
-        "total_income": round(float(income), 2),
-        "total_spent": round(float(abs(spent)), 2),
-        "left_over": round(float(income) - float(abs(spent)), 2),
-        "category_spending": {k: round(v, 2) for k, v in category_spending.items()},
-        "daily_spending": {k: round(v, 2) for k, v in daily_spending.items()},
-        "category_most_spent": most_spent,
-        "category_least_spent": least_spent,
-    }
-
-
-def analyze_pdf(path: str) -> dict:
-    model, vectorizer = load_model()
-    raw_text = extract_text_from_pdf(path)
-    if not raw_text:
-        return {"error": "Could not extract text from PDF."}
-    df = parse_transactions(raw_text)
-    if df.empty:
-        return {"error": "No transactions found in PDF."}
-    df = classify_transactions(df, model, vectorizer)
-    metrics = compute_metrics(df)
-    return {
-        "transactions": df.to_dict(orient="records"),
-        "metrics": metrics,
-    }
