@@ -1,6 +1,0 @@
-fastapi
-uvicorn[standard]
-python-multipart
-pdfplumber
-pandas
-scikit-learn
