@@ -16,10 +16,6 @@ from pipeline import (
     compute_metrics
 )
 
-
-
-
-
 # 1. Load environment variables from .env
 load_dotenv()
 
@@ -50,10 +46,6 @@ elevenlabs_client = ElevenLabs(api_key=elevenlabs_api_key) if elevenlabs_api_key
 
 if not elevenlabs_api_key:
     print("⚠️ WARNING: ELEVENLABS_API_KEY not found in .env file! Audio generation disabled.")
-
-
-
-
 
 # 4. Setup Directories and Models
 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "uploads")

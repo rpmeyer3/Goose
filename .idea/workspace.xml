@@ -5,16 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="073f56ce-7492-435d-89ba-89ee0e75614a" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/UgaHacks11.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/UgaHacks11.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/test_eleven_labs.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/byteAbout.webp" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/public/byteAbout.webp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_generators/generate_sample_BAD_statement.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/data_generators/generate_sample_BAD_statement.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/data_generators/generate_sample_statement.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/data_generators/generate_sample_statement.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/naive_bayes_model.pkl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vectorizer.pkl" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_gemini.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/test_gemini.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/upload/sample_bank_statement.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/backend/upload/sample_bank_statement.pdf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/Budget.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/Budget.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,8 +68,9 @@
       <recent name="$PROJECT_DIR$" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/data_generators" />
       <recent name="$PROJECT_DIR$/backend" />
+      <recent name="$PROJECT_DIR$/frontend/public" />
+      <recent name="$PROJECT_DIR$/data_generators" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -99,7 +94,7 @@
       <workItem from="1770426470238" duration="992000" />
       <workItem from="1770433455220" duration="136000" />
       <workItem from="1770433602782" duration="10295000" />
-      <workItem from="1770477212943" duration="1957000" />
+      <workItem from="1770477212943" duration="3688000" />
     </task>
     <servers />
   </component>
