@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Navbar from "./components/Navbar";
-import { MagicParticles } from "./components/MagicEffects";
+import { MagicParticles, Parallax3DBackground } from "./components/MagicEffects";
 import Home from "./pages/Home";
 import Budget from "./pages/Budget";
 import About from "./pages/About";
@@ -25,7 +25,8 @@ export default function App() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-dark-wizard stars-bg relative overflow-x-hidden">
+    <div className="min-h-screen flex flex-col bg-dark-wizard relative overflow-x-hidden wand-cursor-default">
+      {!isMobile && <Parallax3DBackground />}
       {!isMobile && <MagicParticles count={25} />}
       <Navbar />
       <main className="flex-1 relative z-10">

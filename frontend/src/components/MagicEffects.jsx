@@ -1,5 +1,5 @@
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, useCallback } from "react";
 
 // Scroll-triggered fade-in section (like your personal site)
 export function FadeInSection({ children, delay = 0, direction = "up", className = "" }) {
@@ -210,6 +210,89 @@ export function MagicSpinner() {
       >
         The enchantment is weaving...
       </motion.p>
+    </div>
+  );
+}
+
+// 3D parallax background that responds to mouse movement
+export function Parallax3DBackground() {
+  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  const rafRef = useRef(null);
+  const targetRef = useRef({ x: 0, y: 0 });
+
+  const handleMouseMove = useCallback((e) => {
+    // Normalize to -1 to 1 range centered on viewport
+    targetRef.current = {
+      x: (e.clientX / window.innerWidth - 0.5) * 2,
+      y: (e.clientY / window.innerHeight - 0.5) * 2,
+    };
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener("mousemove", handleMouseMove);
+
+    let current = { x: 0, y: 0 };
+
+    function animate() {
+      // Smooth lerp for fluid motion
+      current.x += (targetRef.current.x - current.x) * 0.05;
+      current.y += (targetRef.current.y - current.y) * 0.05;
+      setMouse({ x: current.x, y: current.y });
+      rafRef.current = requestAnimationFrame(animate);
+    }
+    rafRef.current = requestAnimationFrame(animate);
+
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, [handleMouseMove]);
+
+  const rotateX = mouse.y * -3;  // tilt up/down
+  const rotateY = mouse.x * 3;   // tilt left/right
+
+  return (
+    <div className="parallax-scene fixed inset-0 pointer-events-none z-0" style={{ perspective: "1200px" }}>
+      {/* Deep background stars layer — moves slowly (far away) */}
+      <div
+        className="absolute inset-0 stars-bg-deep"
+        style={{
+          transform: `translate3d(${mouse.x * -8}px, ${mouse.y * -8}px, -100px) rotateX(${rotateX * 0.3}deg) rotateY(${rotateY * 0.3}deg)`,
+          transition: "transform 0.1s ease-out",
+        }}
+      />
+
+      {/* Mid-layer stars — moves moderately */}
+      <div
+        className="absolute inset-0 stars-bg-mid"
+        style={{
+          transform: `translate3d(${mouse.x * -18}px, ${mouse.y * -18}px, -50px) rotateX(${rotateX * 0.5}deg) rotateY(${rotateY * 0.5}deg)`,
+          transition: "transform 0.1s ease-out",
+        }}
+      />
+
+      {/* Near-layer floating orbs — moves more (close to viewer) */}
+      <div
+        className="absolute inset-0"
+        style={{
+          transform: `translate3d(${mouse.x * -30}px, ${mouse.y * -30}px, 0px) rotateX(${rotateX * 0.8}deg) rotateY(${rotateY * 0.8}deg)`,
+          transition: "transform 0.1s ease-out",
+        }}
+      >
+        {/* Faint nebula-like blobs */}
+        <div className="absolute w-80 h-80 rounded-full bg-wizard-purple/10 blur-3xl top-1/4 left-1/4" />
+        <div className="absolute w-64 h-64 rounded-full bg-wizard-gold/5 blur-3xl top-2/3 right-1/4" />
+        <div className="absolute w-96 h-96 rounded-full bg-indigo-900/10 blur-3xl bottom-1/4 left-1/2" />
+      </div>
+
+      {/* Foreground subtle sparkle dots — moves most */}
+      <div
+        className="absolute inset-0 stars-bg-near"
+        style={{
+          transform: `translate3d(${mouse.x * -45}px, ${mouse.y * -45}px, 50px)`,
+          transition: "transform 0.1s ease-out",
+        }}
+      />
     </div>
   );
 }
