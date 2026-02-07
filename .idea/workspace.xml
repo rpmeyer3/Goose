@@ -4,115 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="073f56ce-7492-435d-89ba-89ee0e75614a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/igor-training-data.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/autoprefixer" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/autoprefixer" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/autoprefixer.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/autoprefixer.ps1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/baseline-browser-mapping" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/baseline-browser-mapping" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/baseline-browser-mapping.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/baseline-browser-mapping.ps1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/browserslist" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/browserslist" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/browserslist.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/browserslist.ps1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/cssesc" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/cssesc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/cssesc.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/cssesc.ps1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/esbuild" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/esbuild" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/esbuild.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/esbuild.ps1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/jiti" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/jiti" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/jiti.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/jiti.ps1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/jsesc" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/jsesc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/jsesc.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/jsesc.ps1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/json5" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/json5" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/json5.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/json5.ps1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/loose-envify" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/loose-envify" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/loose-envify.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/loose-envify.ps1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/nanoid" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/nanoid" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/nanoid.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/nanoid.ps1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/parser" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/parser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/parser.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/parser.ps1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/resolve" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/resolve" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/resolve.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/resolve.ps1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/rollup" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/rollup" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/rollup.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/rollup.ps1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/semver" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/semver" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/semver.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/semver.ps1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/sucrase" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/sucrase" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/sucrase-node" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/sucrase-node" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/sucrase-node.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/sucrase-node.ps1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/sucrase.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/sucrase.ps1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/tailwind" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/tailwind" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/tailwind.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/tailwind.ps1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/tailwindcss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/tailwindcss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/tailwindcss.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/tailwindcss.ps1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/update-browserslist-db" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/update-browserslist-db" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/update-browserslist-db.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/update-browserslist-db.ps1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/vite" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/vite" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/vite.cmd" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/vite.ps1" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@babel/parser/bin/babel-parser.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/@babel/parser/bin/babel-parser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@esbuild/win32-x64/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@esbuild/win32-x64/esbuild.exe" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@esbuild/win32-x64/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@rollup/rollup-win32-x64-gnu/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@rollup/rollup-win32-x64-gnu/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@rollup/rollup-win32-x64-gnu/rollup.win32-x64-gnu.node" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@rollup/rollup-win32-x64-msvc/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@rollup/rollup-win32-x64-msvc/package.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@rollup/rollup-win32-x64-msvc/rollup.win32-x64-msvc.node" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@types/babel__core/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/@types/babel__core/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@types/babel__generator/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/@types/babel__generator/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@types/babel__template/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/@types/babel__template/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@types/babel__traverse/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/@types/babel__traverse/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/@types/estree/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/@types/estree/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/autoprefixer/bin/autoprefixer" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/autoprefixer/bin/autoprefixer" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/baseline-browser-mapping/dist/cli.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/baseline-browser-mapping/dist/cli.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/browserslist/cli.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/browserslist/cli.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/cssesc/bin/cssesc" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/cssesc/bin/cssesc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/didyoumean/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/didyoumean/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/esbuild/bin/esbuild" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/esbuild/bin/esbuild" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/jiti/bin/jiti.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/jiti/bin/jiti.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/jsesc/bin/jsesc" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/jsesc/bin/jsesc" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/json5/lib/cli.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/json5/lib/cli.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/loose-envify/cli.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/loose-envify/cli.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/micromatch/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/micromatch/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/nanoid/bin/nanoid.cjs" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/nanoid/bin/nanoid.cjs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/postcss-import/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/postcss-import/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/postcss-import/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/postcss-import/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/queue-microtask/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/queue-microtask/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/read-cache/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/read-cache/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/read-cache/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/read-cache/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/resolve/bin/resolve" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/resolve/bin/resolve" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/rollup/dist/bin/rollup" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/rollup/dist/bin/rollup" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/semver/bin/semver.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/semver/bin/semver.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/sucrase/bin/sucrase" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/sucrase/bin/sucrase" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/sucrase/bin/sucrase-node" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/sucrase/bin/sucrase-node" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/tailwindcss/lib/cli.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/tailwindcss/lib/cli.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/update-browserslist-db/cli.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/update-browserslist-db/cli.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/vite/bin/vite.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/vite/bin/vite.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/node_modules/vite/dist/node/chunks/dep-BB45zftN.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/vite/dist/node/chunks/dep-BB45zftN.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/naive_bayes_model.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/models/naive_bayes_model.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/models/vectorizer.pkl" beforeDir="false" afterPath="$PROJECT_DIR$/models/vectorizer.pkl" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pipeline.py" beforeDir="false" afterPath="$PROJECT_DIR$/pipeline.py" afterDir="false" />
-    </list>
+    <list default="true" id="073f56ce-7492-435d-89ba-89ee0e75614a" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -191,7 +83,7 @@
       <workItem from="1770426256627" duration="14000" />
       <workItem from="1770426470238" duration="992000" />
       <workItem from="1770433455220" duration="136000" />
-      <workItem from="1770433602782" duration="1001000" />
+      <workItem from="1770433602782" duration="1302000" />
     </task>
     <servers />
   </component>

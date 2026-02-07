@@ -16,9 +16,7 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    return {"message": "Welcome to the API"}
-
-
+    return {"message": "Ronaldo is waaaaay better than Pessi"}
 
 
 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "uploads")
