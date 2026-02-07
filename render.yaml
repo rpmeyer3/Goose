@@ -3,13 +3,13 @@ services:
     name: bytes-bank-api
     runtime: python
     buildCommand: pip install -r requirements.txt
-    startCommand: cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT
+    startCommand: cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT #Port=8000
     envVars:
       - key: FRONTEND_URL
-        value: https://your-app.vercel.app  # ← replace after Vercel deploy
+        value: https://byte-bank-mauve.vercel.app
       - key: GOOGLE_API_KEY
-        sync: false  # set in Render dashboard
+        sync: false
       - key: ELEVENLABS_API_KEY
-        sync: false  # set in Render dashboard
+        sync: false
       - key: PYTHON_VERSION
         value: 3.11.6
