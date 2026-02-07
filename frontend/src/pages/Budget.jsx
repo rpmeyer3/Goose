@@ -68,7 +68,7 @@ export default function Budget({ data }) {
 
   if (!data) {
     return (
-      <div className="max-w-2xl mx-auto px-6 py-20 text-center">
+      <div className="max-w-2xl mx-auto px-4 sm:px-6 py-14 sm:py-20 text-center">
         <motion.div
           className="text-6xl mb-4"
           animate={{ y: [0, -15, 0], rotate: [0, 10, -10, 0] }}
@@ -108,14 +108,14 @@ export default function Budget({ data }) {
     : 1;
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-14">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
       <FadeInSection>
-        <h1 className="text-3xl font-display font-bold mb-8 text-wizard-gold drop-shadow-[0_0_12px_rgba(212,168,67,0.4)]">
+        <h1 className="text-2xl sm:text-3xl font-display font-bold mb-6 sm:mb-8 text-wizard-gold drop-shadow-[0_0_12px_rgba(212,168,67,0.4)]">
           📜 Vault Overview
         </h1>
       </FadeInSection>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6">
         <StatCard
           label="Galleons Earned"
           value={fmt(metrics.total_income)}
@@ -139,7 +139,7 @@ export default function Budget({ data }) {
         />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 mb-8 sm:mb-12">
         {metrics.category_most_spent && (
           <StatCard
             label="Most Bewitching Category"
@@ -207,8 +207,8 @@ export default function Budget({ data }) {
       </StaggerContainer>
 
       {dailyEntries.length > 0 && (() => {
-        const CHART_W = 700;
-        const CHART_H = 220;
+        const CHART_W = 600;
+        const CHART_H = 200;
         const PAD = { top: 20, right: 20, bottom: 50, left: 60 };
         const plotW = CHART_W - PAD.left - PAD.right;
         const plotH = CHART_H - PAD.top - PAD.bottom;
@@ -331,10 +331,10 @@ export default function Budget({ data }) {
             <table className="w-full text-sm text-left">
               <thead className="bg-wizard-deep text-wizard-gold/70 uppercase text-xs font-display tracking-wider">
                 <tr>
-                  <th className="px-4 py-3">Date</th>
-                  <th className="px-4 py-3">Description</th>
-                  <th className="px-4 py-3">Category</th>
-                  <th className="px-4 py-3 text-right">Amount</th>
+                  <th className="px-3 sm:px-4 py-3 whitespace-nowrap">Date</th>
+                  <th className="px-3 sm:px-4 py-3">Description</th>
+                  <th className="px-3 sm:px-4 py-3 hidden sm:table-cell">Category</th>
+                  <th className="px-3 sm:px-4 py-3 text-right whitespace-nowrap">Amount</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-wizard-gold/10">
@@ -348,15 +348,15 @@ export default function Budget({ data }) {
                     whileHover={{ backgroundColor: "rgba(45, 27, 105, 0.5)" }}
                     className="transition-colors cursor-default"
                   >
-                    <td className="px-4 py-3 whitespace-nowrap text-parchment/70">{tx.date}</td>
-                    <td className="px-4 py-3 text-parchment/80">{tx.description}</td>
-                    <td className="px-4 py-3">
+                    <td className="px-3 sm:px-4 py-3 whitespace-nowrap text-parchment/70 text-xs sm:text-sm">{tx.date}</td>
+                    <td className="px-3 sm:px-4 py-3 text-parchment/80 text-xs sm:text-sm max-w-[120px] sm:max-w-none truncate">{tx.description}</td>
+                    <td className="px-3 sm:px-4 py-3 hidden sm:table-cell">
                       <span className="text-xs font-display font-medium px-2 py-0.5 rounded-full bg-wizard-slate text-wizard-gold/80">
                         {prettyCat(tx.category)}
                       </span>
                     </td>
                     <td
-                      className={`px-4 py-3 text-right font-medium ${
+                      className={`px-3 sm:px-4 py-3 text-right font-medium text-xs sm:text-sm whitespace-nowrap ${
                         tx.amount >= 0 ? "text-emerald-400" : "text-red-400"
                       }`}
                     >

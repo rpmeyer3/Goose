@@ -59,7 +59,7 @@ export default function Home({ setAnalysisData }) {
   }
 
   return (
-    <div className="max-w-2xl mx-auto px-6 py-16 relative">
+    <div className="max-w-2xl mx-auto px-4 sm:px-6 py-10 sm:py-16 relative">
       {/* Hero section with typewriter */}
       <FadeInSection>
         <motion.div
@@ -69,13 +69,13 @@ export default function Home({ setAnalysisData }) {
           transition={{ duration: 0.5, type: "spring" }}
         >
           <motion.div
-            className="text-6xl mb-6"
+            className="text-4xl sm:text-6xl mb-4 sm:mb-6"
             animate={{ rotate: [0, 10, -10, 0], y: [0, -10, 0] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
           >
             🪄
           </motion.div>
-          <h1 className="text-4xl md:text-5xl font-display font-bold text-center mb-3 text-wizard-gold drop-shadow-[0_0_12px_rgba(212,168,67,0.4)]">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold text-center mb-3 text-wizard-gold drop-shadow-[0_0_12px_rgba(212,168,67,0.4)]">
             Cast Your Scroll
           </h1>
           <div className="h-8 flex items-center justify-center">
@@ -106,7 +106,7 @@ export default function Home({ setAnalysisData }) {
           onClick={() => inputRef.current.click()}
           whileHover={{ scale: 1.01, boxShadow: "0 0 40px rgba(212, 168, 67, 0.3)" }}
           whileTap={{ scale: 0.99 }}
-          className={`spell-card border-2 border-dashed rounded-2xl p-14 text-center cursor-pointer transition-all duration-500 ${
+          className={`spell-card border-2 border-dashed rounded-2xl p-8 sm:p-14 text-center cursor-pointer transition-all duration-500 ${
             dragging
               ? "border-wizard-gold bg-wizard-gold/10 shadow-glow-lg"
               : "border-wizard-gold/30 hover:border-wizard-gold/60"
@@ -121,7 +121,7 @@ export default function Home({ setAnalysisData }) {
           />
 
           <motion.div
-            className="text-5xl mb-4"
+            className="text-4xl sm:text-5xl mb-4"
             animate={{
               y: [0, -15, 0],
               rotateZ: [0, 5, -5, 0],
@@ -202,7 +202,7 @@ export default function Home({ setAnalysisData }) {
 
       {/* Feature highlights */}
       <FadeInSection delay={0.6}>
-        <div className="grid grid-cols-3 gap-4 mt-14">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-10 sm:mt-14">
           {[
             { icon: "🔐", title: "Secure", desc: "Scrolls vanish after analysis" },
             { icon: "🤖", title: "ML Powered", desc: "Sorting charm AI" },
