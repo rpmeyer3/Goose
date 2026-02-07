@@ -11,6 +11,9 @@ import About from "./pages/About";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import AuthCallback from "./pages/AuthCallback";
+import Profile from "./pages/Profile";
+import Statements from "./pages/Statements";
+import Dashboard from "./pages/Dashboard";
 
 const pageVariants = {
   initial: { opacity: 0, y: 20, filter: "blur(4px)" },
@@ -65,6 +68,30 @@ export default function App() {
                 }
               />
               <Route path="/about" element={<About />} />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <Profile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/statements"
+                element={
+                  <ProtectedRoute>
+                    <Statements />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
             </Routes>
           </motion.div>
         </AnimatePresence>

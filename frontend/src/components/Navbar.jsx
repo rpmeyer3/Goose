@@ -31,12 +31,22 @@ export default function Navbar() {
         : "text-parchment/70 hover:text-wizard-gold hover:bg-wizard-purple/50"
     }`;
 
-  const navItems = [
+  const publicItems = [
     { to: "/", label: "🪄 Summon" },
-    { to: "/budget", label: "📜 Vault" },
-    { to: "/chat", label: "💬 Advisor" },
     { to: "/about", label: "🔮 Oracle" },
   ];
+
+  const authedItems = [
+    { to: "/dashboard", label: "📊 Rundown" },
+    { to: "/budget", label: "📜 Vault" },
+    { to: "/statements", label: "🗂️ Archive" },
+    { to: "/chat", label: "💬 Advisor" },
+    { to: "/profile", label: "🧙 Profile" },
+  ];
+
+  const navItems = user
+    ? [{ to: "/", label: "🪄 Summon" }, ...authedItems]
+    : publicItems;
 
   return (
     <motion.nav
