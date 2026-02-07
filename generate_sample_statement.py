@@ -56,7 +56,6 @@ TRANSACTIONS = [
     ("02/15/2026", "Prophecy Divination Payment",           185.00),
 ]
 
-
 def generate_pdf(output_path: str = "sample_bank_statement.pdf"):
     pdf = FPDF()
     pdf.set_auto_page_break(auto=True, margin=15)

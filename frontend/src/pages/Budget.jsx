@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FadeInSection, StaggerContainer, StaggerItem, TiltCard, AnimatedNumber } from "../components/MagicEffects";
+import { FadeInSection, StaggerContainer, StaggerItem, TiltCard } from "../components/MagicEffects";
 
 const COLORS = [
   "bg-wizard-crimson/20 text-red-300",
@@ -23,6 +23,42 @@ const BAR_COLORS = [
   "from-teal-500 to-teal-400",
   "from-pink-500 to-pink-400",
 ];
+
+function AdvisorSection({ summary }) {
+  return (
+    <FadeInSection delay={0.1}>
+      <TiltCard>
+        <motion.div
+          className="spell-card relative overflow-hidden mb-10 p-8 rounded-2xl border border-wizard-gold/30 bg-wizard-deep/40 backdrop-blur-md shadow-glow-sm"
+          whileHover={{ boxShadow: "0 0 30px rgba(212, 168, 67, 0.15)" }}
+        >
+          {/* Decorative Top Border */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-wizard-gold/50 to-transparent" />
+
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-3xl">📜</span>
+            <h2 className="text-xl font-display font-bold text-wizard-gold tracking-wide">
+              Gringotts Financial Prophecy
+            </h2>
+          </div>
+
+          <p className="text-parchment/90 font-serif italic leading-relaxed text-lg relative z-10">
+            {summary}
+          </p>
+
+          {/* Floating magical background icon */}
+          <motion.div
+            className="absolute -bottom-2 -right-2 text-6xl opacity-10 pointer-events-none"
+            animate={{ rotate: [0, 10, 0], scale: [1, 1.1, 1] }}
+            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+          >
+            ⚖️
+          </motion.div>
+        </motion.div>
+      </TiltCard>
+    </FadeInSection>
+  );
+}
 
 function StatCard({ label, value, accent, sub, icon, delay = 0 }) {
   return (
@@ -94,7 +130,7 @@ export default function Budget({ data }) {
     );
   }
 
-  const { metrics } = data;
+  const { metrics, advisor_summary } = data;
   const leftOver = metrics.left_over;
   const categories = Object.entries(metrics.category_spending).sort(
     (a, b) => b[1] - a[1]
@@ -114,6 +150,9 @@ export default function Budget({ data }) {
           📜 Vault Overview
         </h1>
       </FadeInSection>
+
+      {/* Gemini AI Advisor Section */}
+      {advisor_summary && <AdvisorSection summary={advisor_summary} />}
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <StatCard
@@ -206,6 +245,7 @@ export default function Budget({ data }) {
         )}
       </StaggerContainer>
 
+      {/* Daily Chart Logic */}
       {dailyEntries.length > 0 && (() => {
         const CHART_W = 700;
         const CHART_H = 220;
@@ -213,20 +253,17 @@ export default function Budget({ data }) {
         const plotW = CHART_W - PAD.left - PAD.right;
         const plotH = CHART_H - PAD.top - PAD.bottom;
 
-        // Y-axis ticks
         const niceMax = Math.ceil(maxDaily / 50) * 50 || 50;
         const yTicks = [];
         const yStep = niceMax <= 200 ? 50 : niceMax <= 500 ? 100 : Math.ceil(niceMax / 5 / 100) * 100;
         for (let v = 0; v <= niceMax; v += yStep) yTicks.push(v);
 
-        // Map data to points
         const points = dailyEntries.map(([date, amount], i) => {
           const x = PAD.left + (dailyEntries.length === 1 ? plotW / 2 : (i / (dailyEntries.length - 1)) * plotW);
           const y = PAD.top + plotH - (amount / niceMax) * plotH;
           return { x, y, date, amount };
         });
 
-        // Build SVG line + area
         const lineD = points.map((p, i) => `${i === 0 ? "M" : "L"}${p.x},${p.y}`).join(" ");
         const areaD = `${lineD} L${points[points.length - 1].x},${PAD.top + plotH} L${points[0].x},${PAD.top + plotH} Z`;
 
@@ -240,83 +277,30 @@ export default function Budget({ data }) {
                 className="spell-card rounded-2xl p-6 mb-12 overflow-hidden"
                 whileHover={{ boxShadow: "0 0 30px rgba(212, 168, 67, 0.2)" }}
               >
-              <svg
-                viewBox={`0 0 ${CHART_W} ${CHART_H}`}
-                className="w-full h-auto"
-                preserveAspectRatio="xMidYMid meet"
-              >
-                {/* gradient fill under line */}
+              <svg viewBox={`0 0 ${CHART_W} ${CHART_H}`} className="w-full h-auto" preserveAspectRatio="xMidYMid meet">
                 <defs>
                   <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="0%" stopColor="#d4a843" stopOpacity="0.4" />
                     <stop offset="100%" stopColor="#d4a843" stopOpacity="0.03" />
                   </linearGradient>
                 </defs>
-
-                {/* horizontal grid lines + Y-axis labels */}
                 {yTicks.map((v) => {
                   const y = PAD.top + plotH - (v / niceMax) * plotH;
                   return (
                     <g key={v}>
                       <line x1={PAD.left} x2={PAD.left + plotW} y1={y} y2={y} stroke="#3d3566" strokeWidth="1" />
-                      <text x={PAD.left - 8} y={y + 3} textAnchor="end" fontSize="10" fill="#8b7eb8">
-                        ${v}
-                      </text>
+                      <text x={PAD.left - 8} y={y + 3} textAnchor="end" fontSize="10" fill="#8b7eb8">${v}</text>
                     </g>
                   );
                 })}
-
-                {/* Y-axis line */}
-                <line x1={PAD.left} x2={PAD.left} y1={PAD.top} y2={PAD.top + plotH} stroke="#5a4f8a" strokeWidth="1" />
-
-                {/* X-axis line */}
-                <line x1={PAD.left} x2={PAD.left + plotW} y1={PAD.top + plotH} y2={PAD.top + plotH} stroke="#5a4f8a" strokeWidth="1" />
-
-                {/* filled area */}
                 <path d={areaD} fill="url(#areaGrad)" />
-
-                {/* line */}
-                <path d={lineD} fill="none" stroke="#d4a843" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
-
-                {/* dots + hover targets */}
-                {points.map((p) => {
-                  const shortDate = p.date.replace(/^0?(\d+)\/0?(\d+)\/\d+$/, "$1/$2");
-                  return (
-                    <g key={p.date} className="group">
-                      {/* invisible wider hit area */}
-                      <circle cx={p.x} cy={p.y} r="10" fill="transparent" className="cursor-pointer" />
-                      {/* visible dot */}
-                      <circle cx={p.x} cy={p.y} r="4" fill="#d4a843" stroke="#0d0221" strokeWidth="2" />
-                      {/* tooltip on hover */}
-                      <g className="opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
-                        <rect x={p.x - 36} y={p.y - 32} width="72" height="20" rx="6" fill="#2d1b69" stroke="#d4a843" strokeWidth="0.5" />
-                        <text x={p.x} y={p.y - 18} textAnchor="middle" fontSize="10" fill="#f0d78c" fontWeight="600">
-                          {fmt(p.amount)}
-                        </text>
-                      </g>
-                    </g>
-                  );
-                })}
-
-                {/* X-axis date labels */}
-                {points.map((p, i) => {
-                  const shortDate = p.date.replace(/^0?(\d+)\/0?(\d+)\/\d+$/, "$1/$2");
-                  const showLabel = dailyEntries.length <= 15 || i % 2 === 0;
-                  if (!showLabel) return null;
-                  return (
-                    <text
-                      key={p.date}
-                      x={p.x}
-                      y={PAD.top + plotH + 16}
-                      textAnchor="middle"
-                      fontSize="9"
-                      fill="#8b7eb8"
-                      transform={`rotate(-45, ${p.x}, ${PAD.top + plotH + 16})`}
-                    >
-                      {shortDate}
-                    </text>
-                  );
-                })}
+                <path d={lineD} fill="none" stroke="#d4a843" strokeWidth="2.5" strokeLinejoin="round" />
+                {points.map((p) => (
+                  <g key={p.date} className="group">
+                    <circle cx={p.x} cy={p.y} r="10" fill="transparent" className="cursor-pointer" />
+                    <circle cx={p.x} cy={p.y} r="4" fill="#d4a843" stroke="#0d0221" strokeWidth="2" />
+                  </g>
+                ))}
               </svg>
               </motion.div>
             </FadeInSection>
@@ -324,6 +308,7 @@ export default function Budget({ data }) {
         );
       })()}
 
+      {/* Transaction Table */}
       <FadeInSection delay={0.1}>
         <div className="pt-8 border-t border-wizard-gold/20">
           <h2 className="text-xl font-display font-semibold mb-4 text-wizard-gold-light">📖 Transaction Ledger</h2>
@@ -355,11 +340,7 @@ export default function Budget({ data }) {
                         {prettyCat(tx.category)}
                       </span>
                     </td>
-                    <td
-                      className={`px-4 py-3 text-right font-medium ${
-                        tx.amount >= 0 ? "text-emerald-400" : "text-red-400"
-                      }`}
-                    >
+                    <td className={`px-4 py-3 text-right font-medium ${tx.amount >= 0 ? "text-emerald-400" : "text-red-400"}`}>
                       {fmt(tx.amount)}
                     </td>
                   </motion.tr>

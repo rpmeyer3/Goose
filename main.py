@@ -1,23 +1,27 @@
 import os
 import uuid
+
+from dotenv import load_dotenv
+
 from fastapi import FastAPI, File, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from google import genai
 from pipeline import load_model, extract_text_from_pdf, parse_transactions, classify_transactions, compute_metrics
 
+load_dotenv()
 app = FastAPI()
 
+# Fix: Remove trailing slash from localhost:5173
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173/"], # React Vite Native Route
+    allow_origins=["http://localhost:5173"],
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-@app.get("/")
-async def root():
-    return {"message": "Ronaldo is waaaaay better than Pessi"}
-
+api_key = os.getenv("GEMINI_API_KEY")
+client = genai.Client(api_key=api_key)
 
 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
@@ -49,10 +53,43 @@ async def analyze_statement(file: UploadFile = File(...)):
         df = classify_transactions(df, model, vectorizer)
         metrics = compute_metrics(df)
 
+        # Gemini Stuff (DONT TOUCH - igor)
+        advisor_text = "The owls are resting. Summary unavailable."
+        try:
+            top_cat = metrics['category_most_spent'].replace('_', ' ')
+            prompt = (
+                f"You are a Gringotts Bank Manager. Analyze this spending: "
+                f"Spent {metrics['total_spent']} Galleons, mostly on {top_cat}. "
+                f"Remaining: {metrics['left_over']}. Give a witty 2/3-sentence "
+                f"summary and 1 wizarding saving tip. End with an encouraging wizard slogan"
+                f"that will be fun, light-hearted and memorable."
+            )
+
+            # New SDK call syntax
+            response = client.models.generate_content(
+                model="gemini-1.5-flash",
+                contents=prompt
+            )
+            if response and response.text:
+                advisor_text = response.text
+        except Exception as ai_err:
+            print(f"Gemini AI Error: {ai_err}")
+
         return JSONResponse(content={
             "transactions": df.to_dict(orient="records"),
             "metrics": metrics,
+            "advisor_summary": advisor_text
         })
+
+    except Exception as e:
+        print(f"Server Logic Error: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
     finally:
         if os.path.exists(filepath):
             os.remove(filepath)
+
+
+if __name__ == "__main__":
+    import uvicorn
+
+    uvicorn.run(app, host="0.0.0.0", port=8000)
