@@ -12,7 +12,7 @@ export default function LoadingOverlay({ isLoading }) {
         >
           {/* Your PNG with a floating/scaling animation */}
           <motion.img
-            src="/public/byteAbout.webp" // Try bytehacks11.png is it doesnt work
+            src="/public/byteAbout.webp" // Try bytehacks11.png if it doesnt work
             alt="Loading..."
             className="w-32 h-32 object-contain drop-shadow-[0_0_20px_rgba(212,168,67,0.4)]"
             animate={{
