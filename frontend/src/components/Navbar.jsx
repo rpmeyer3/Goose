@@ -11,9 +11,12 @@ export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50 bg-dark-wizard/90 backdrop-blur-md border-b border-wizard-gold/20">
       <div className="max-w-5xl mx-auto flex items-center justify-between px-6 py-3">
-        <span className="text-xl font-display font-bold tracking-widest text-wizard-gold drop-shadow-[0_0_8px_rgba(212,168,67,0.5)]">
-          ⚡ Gringotts Ledger
-        </span>
+        <div className="flex items-center gap-3">
+          <img src="/bytehacks11.png" alt="Byte's Bank" className="h-10 w-10" />
+          <span className="text-xl font-display font-bold tracking-widest text-wizard-gold drop-shadow-[0_0_8px_rgba(212,168,67,0.5)]">
+            Byte's Bank
+          </span>
+        </div>
         <div className="flex gap-2">
           <NavLink to="/" className={link}>
             🪄 Summon

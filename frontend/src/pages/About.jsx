@@ -23,10 +23,10 @@ export default function About() {
   return (
     <div className="max-w-3xl mx-auto px-6 py-14">
       <h1 className="text-3xl font-display font-bold mb-3 text-wizard-gold drop-shadow-[0_0_12px_rgba(212,168,67,0.4)]">
-        🔮 About Gringotts Ledger
+        🔮 About Byte's Bank
       </h1>
       <p className="text-parchment/50 mb-10 max-w-xl font-serif italic">
-        Gringotts Ledger is a magical bank statement analyzer forged at UGA Hacks 11. Present
+        Byte's Bank is a magical bank statement analyzer forged at UGA Hacks 11. Present
         a parchment scroll (PDF) and the enchantment shall reveal all thy income, spending habits,
         and category-level breakdowns — powered by arcane machine learning sorcery.
       </p>
