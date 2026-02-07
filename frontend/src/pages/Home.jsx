@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { TypeWriter, FadeInSection, MagicSpinner } from "../components/MagicEffects";
+import { DEMO_DATA } from "../demoData";
 
 const API_BASE = import.meta.env.VITE_API_URL || "";
 
@@ -56,6 +57,11 @@ export default function Home({ setAnalysisData }) {
     } finally {
       setUploading(false);
     }
+  }
+
+  function loadDemo() {
+    setAnalysisData(DEMO_DATA);
+    navigate("/budget");
   }
 
   return (
@@ -197,6 +203,18 @@ export default function Home({ setAnalysisData }) {
           ) : (
             "⚡ Revelio!"
           )}
+        </motion.button>
+      </FadeInSection>
+
+      {/* Demo button */}
+      <FadeInSection delay={0.5}>
+        <motion.button
+          onClick={loadDemo}
+          whileHover={{ scale: 1.02, boxShadow: "0 0 30px rgba(168, 85, 247, 0.4)" }}
+          whileTap={{ scale: 0.98 }}
+          className="mt-4 w-full py-3 rounded-xl font-display font-semibold text-wizard-gold-light border-2 border-wizard-gold/40 hover:border-wizard-gold/80 bg-wizard-gold/5 hover:bg-wizard-gold/10 transition-all duration-300 text-base"
+        >
+          ✨ Or Try Demo
         </motion.button>
       </FadeInSection>
 
