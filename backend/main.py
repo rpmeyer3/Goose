@@ -58,7 +58,7 @@ if not elevenlabs_api_key:
 
 
 # 4. Setup Directories and Models
-UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "uploads")
+UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "backend/upload")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 model, vectorizer = load_model()
@@ -71,6 +71,9 @@ class ChatRequest(BaseModel):
     message: str
     spending_data: dict = None
     transaction_count: int = 0
+
+
+
 
 
 @app.get("/")
