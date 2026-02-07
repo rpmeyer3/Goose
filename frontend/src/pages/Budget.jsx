@@ -11,20 +11,18 @@ const COLORS = [
   "bg-pink-100 text-pink-700",
 ];
 
-function StatCard({ label, value, accent }) {
+function StatCard({ label, value, accent, sub }) {
   return (
     <div className="rounded-2xl bg-white shadow-sm border border-gray-100 p-6">
       <p className="text-sm text-gray-500 mb-1">{label}</p>
       <p className={`text-2xl font-bold ${accent}`}>{value}</p>
+      {sub && <p className="text-xs text-gray-400 mt-1">{sub}</p>}
     </div>
   );
 }
 
 function fmt(n) {
-  return n.toLocaleString("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
+  return n.toLocaleString("en-US", { style: "currency", currency: "USD" });
 }
 
 export default function Budget({ data }) {
@@ -48,17 +46,23 @@ export default function Budget({ data }) {
   }
 
   const { metrics } = data;
-  const leftOver = metrics.total_income - metrics.total_spent;
+  const leftOver = metrics.left_over;
   const categories = Object.entries(metrics.category_spending).sort(
     (a, b) => b[1] - a[1]
   );
   const maxSpend = categories.length ? categories[0][1] : 1;
+  const dailyEntries = Object.entries(metrics.daily_spending || {}).sort(
+    (a, b) => a[0].localeCompare(b[0])
+  );
+  const maxDaily = dailyEntries.length
+    ? Math.max(...dailyEntries.map(([, v]) => v))
+    : 1;
 
   return (
     <div className="max-w-3xl mx-auto px-6 py-14">
       <h1 className="text-3xl font-bold mb-8">Budget Overview</h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-12">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <StatCard
           label="Total Income"
           value={fmt(metrics.total_income)}
@@ -76,9 +80,28 @@ export default function Budget({ data }) {
         />
       </div>
 
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+        {metrics.category_most_spent && (
+          <StatCard
+            label="Most Spent Category"
+            value={metrics.category_most_spent}
+            accent="text-rose-600"
+            sub={fmt(metrics.category_spending[metrics.category_most_spent])}
+          />
+        )}
+        {metrics.category_least_spent && (
+          <StatCard
+            label="Least Spent Category"
+            value={metrics.category_least_spent}
+            accent="text-sky-600"
+            sub={fmt(metrics.category_spending[metrics.category_least_spent])}
+          />
+        )}
+      </div>
+
       <h2 className="text-xl font-semibold mb-5">Spending by Category</h2>
 
-      <div className="space-y-4">
+      <div className="space-y-4 mb-12">
         {categories.map(([category, amount], i) => {
           const pct = Math.round((amount / maxSpend) * 100);
           const color = COLORS[i % COLORS.length];
@@ -112,7 +135,37 @@ export default function Budget({ data }) {
         )}
       </div>
 
-      <div className="mt-12 pt-8 border-t border-gray-200">
+      {dailyEntries.length > 0 && (
+        <>
+          <h2 className="text-xl font-semibold mb-5">Daily Spending</h2>
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-12">
+            <div className="flex items-end gap-1 h-40">
+              {dailyEntries.map(([date, amount]) => {
+                const pct = Math.max((amount / maxDaily) * 100, 4);
+                return (
+                  <div
+                    key={date}
+                    className="flex-1 flex flex-col items-center justify-end gap-1 group"
+                  >
+                    <span className="text-[10px] text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                      {fmt(amount)}
+                    </span>
+                    <div
+                      className="w-full max-w-[28px] bg-indigo-500 rounded-t-md transition-all hover:bg-indigo-600"
+                      style={{ height: `${pct}%` }}
+                    />
+                    <span className="text-[9px] text-gray-400 truncate w-full text-center">
+                      {date}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </>
+      )}
+
+      <div className="pt-8 border-t border-gray-200">
         <h2 className="text-xl font-semibold mb-4">Transactions</h2>
         <div className="overflow-x-auto rounded-xl border border-gray-200">
           <table className="w-full text-sm text-left">

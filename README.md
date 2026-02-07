@@ -1,6 +1,16 @@
-# StatementIQ
+# Impendios
 
 A full-stack bank statement analyzer built at **UGA Hacks 11**. Upload a PDF bank statement and instantly get a categorized spending breakdown powered by machine learning.
+
+<br>
+
+## Team
+
+| Member | Role |
+|---|---|
+| **Igor Goncalves** | Machine Learning |
+| **Jordan Delp** | Backend Engineer |
+| **Ryan Meyer** | Frontend Engineer |
 
 <br>
 
@@ -9,8 +19,8 @@ A full-stack bank statement analyzer built at **UGA Hacks 11**. Upload a PDF ban
 1. **Upload** a bank statement PDF through the React frontend.
 2. The FastAPI backend extracts text with `pdfplumber` and parses each line into a transaction (date, description, amount).
 3. A **Naive Bayes classifier** (trained on TF-IDF features) categorizes every transaction into one of 10 spending categories.
-4. The API returns total income, total spent, per-category spending, and the full classified transaction list as JSON.
-5. The **Budget** page renders stat cards, progress bars per category, and a transaction table.
+4. The API returns total income, total spent, left-over amount, daily spending, category most/least spent, and the full classified transaction list as JSON.
+5. The **Budget** page renders stat cards, category bars, a daily spending chart, and a transaction table.
 
 <br>
 
@@ -45,10 +55,11 @@ A full-stack bank statement analyzer built at **UGA Hacks 11**. Upload a PDF ban
         ├── main.jsx             # Entry point
         ├── index.css            # Tailwind imports
         ├── components/
-        │   └── Navbar.jsx       # Sticky nav — Upload / Budget links
+        │   └── Navbar.jsx       # Sticky nav — Upload / Budget / About links
         └── pages/
             ├── Home.jsx         # Drag-and-drop PDF upload
-            └── Budget.jsx       # Income, spent, left-over, category bars, transaction table
+            ├── Budget.jsx       # Income, spent, left-over, daily spending, category breakdown
+            └── About.jsx        # Project info and team members
 ```
 
 <br>
@@ -112,11 +123,18 @@ Upload a PDF bank statement for analysis.
   "metrics": {
     "total_income": 3200.00,
     "total_spent": 1847.53,
+    "left_over": 1352.47,
     "category_spending": {
       "Food": 423.10,
       "Rent": 1200.00,
       "Utilities": 224.43
-    }
+    },
+    "daily_spending": {
+      "01/15": 45.75,
+      "01/16": 120.00
+    },
+    "category_most_spent": "Rent",
+    "category_least_spent": "Utilities"
   }
 }
 ```
@@ -129,7 +147,7 @@ Upload a PDF bank statement for analysis.
 |---|---|
 | Frontend | React 18, Vite, Tailwind CSS, React Router |
 | Backend | FastAPI, Uvicorn |
-| ML Pipeline | scikit-learn (Multinomial Naive Bayes, TF-IDF), pandas |
+| ML Pipeline | scikit-learn (Multinomial Naive Bayes, TF-IDF), pandas, numpy |
 | PDF Parsing | pdfplumber |
 
 <br>

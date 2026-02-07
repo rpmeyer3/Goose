@@ -145,10 +145,23 @@ def compute_metrics(df: pd.DataFrame) -> dict:
         .abs()
         .to_dict()
     )
+    daily_spending = (
+        df.loc[df["amount"] < 0]
+        .groupby("date")["amount"]
+        .sum()
+        .abs()
+        .to_dict()
+    )
+    most_spent = max(category_spending, key=category_spending.get) if category_spending else None
+    least_spent = min(category_spending, key=category_spending.get) if category_spending else None
     return {
         "total_income": round(float(income), 2),
         "total_spent": round(float(abs(spent)), 2),
+        "left_over": round(float(income) - float(abs(spent)), 2),
         "category_spending": {k: round(v, 2) for k, v in category_spending.items()},
+        "daily_spending": {k: round(v, 2) for k, v in daily_spending.items()},
+        "category_most_spent": most_spent,
+        "category_least_spent": least_spent,
     }
 
 

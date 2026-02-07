@@ -12,7 +12,7 @@ export default function Navbar() {
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-gray-200">
       <div className="max-w-5xl mx-auto flex items-center justify-between px-6 py-3">
         <span className="text-lg font-bold tracking-tight text-indigo-600">
-          StatementIQ
+          Impendios
         </span>
         <div className="flex gap-2">
           <NavLink to="/" className={link}>
@@ -20,6 +20,9 @@ export default function Navbar() {
           </NavLink>
           <NavLink to="/budget" className={link}>
             Budget
+          </NavLink>
+          <NavLink to="/about" className={link}>
+            About
           </NavLink>
         </div>
       </div>

@@ -3,4 +3,5 @@ uvicorn[standard]
 python-multipart
 pdfplumber
 pandas
+numpy
 scikit-learn

@@ -3,6 +3,7 @@ import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import Budget from "./pages/Budget";
+import About from "./pages/About";
 
 export default function App() {
   const [analysisData, setAnalysisData] = useState(null);
@@ -14,6 +15,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home setAnalysisData={setAnalysisData} />} />
           <Route path="/budget" element={<Budget data={analysisData} />} />
+          <Route path="/about" element={<About />} />
         </Routes>
       </main>
     </div>
