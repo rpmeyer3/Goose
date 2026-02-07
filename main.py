@@ -44,6 +44,9 @@ os.makedirs(UPLOAD_DIR, exist_ok=True)
 
 model, vectorizer = load_model()
 
+# Simple in-memory cache to avoid duplicate Gemini calls
+_advisor_cache = {}
+
 
 @app.get("/")
 async def root():
@@ -81,32 +84,35 @@ async def analyze_statement(file: UploadFile = File(...)):
         # --- Gemini Financial Advisor Logic ---
         advisor_text = "The owls are resting. Summary unavailable."
 
-        try:
-            # Clean category name for the prompt
-            top_cat = metrics['category_most_spent'].replace('_', ' ')
+        # Cache key based on spending profile to avoid duplicate API calls
+        cache_key = f"{metrics['total_spent']:.0f}-{metrics['category_most_spent']}-{metrics['left_over']:.0f}"
 
-            prompt = (
-                f"You are a Gringotts Bank Manager. Analyze this spending: "
-                f"Spent {metrics['total_spent']} Galleons, mostly on {top_cat}. "
-                f"Remaining in Vault: {metrics['left_over']} Galleons. "
-                f"Give a witty 2 sentence summary and 1 wizarding saving tip. "
-                f"End with an encouraging wizard slogan that is fun and memorable."
-                "Do not use markup!"
-            )
+        if cache_key in _advisor_cache:
+            advisor_text = _advisor_cache[cache_key]
+        else:
+            try:
+                top_cat = metrics['category_most_spent'].replace('_', ' ')
 
-            # API Call using the modern SDK
-            # Note: Using gemini-1.5-flash for broader quota stability
-            response = client.models.generate_content(
-                model="gemini-2.5-flash",
-                contents=prompt
-            )
+                prompt = (
+                    f"You are a Gringotts Bank Manager. Analyze this spending: "
+                    f"Spent {metrics['total_spent']} Galleons, mostly on {top_cat}. "
+                    f"Remaining in Vault: {metrics['left_over']} Galleons. "
+                    f"Give a witty 2 sentence summary and 1 wizarding saving tip. "
+                    f"End with an encouraging wizard slogan that is fun and memorable. "
+                    f"Do not use markup!"
+                )
 
-            if response and response.text:
-                advisor_text = response.text
+                response = client.models.generate_content(
+                    model="gemini-2.5-flash",
+                    contents=prompt
+                )
 
-        except Exception as ai_err:
-            print(f"Gemini AI Error: {ai_err}")
-            # Fallback message is already set above
+                if response and response.text:
+                    advisor_text = response.text
+                    _advisor_cache[cache_key] = advisor_text
+
+            except Exception as ai_err:
+                print(f"Gemini AI Error: {ai_err}")
 
         # Return combined results
         return JSONResponse(content={
