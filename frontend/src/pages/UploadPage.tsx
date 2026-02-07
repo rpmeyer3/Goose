@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { uploadBankStatement } from '../services/api.tsx';
+import { uploadBankStatement } from '../services/api.ts';
 import type {UploadResponse} from '../types';
 import '../styles/UploadPage.css';
 
