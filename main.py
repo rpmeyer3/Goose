@@ -94,9 +94,8 @@ async def analyze_statement(file: UploadFile = File(...)):
             )
 
             # API Call using the modern SDK
-            # Note: Using gemini-1.5-flash for broader quota stability
             response = client.models.generate_content(
-                model="gemini-1.5-flash",
+                model="gemini-2.0-flash",
                 contents=prompt
             )
 
