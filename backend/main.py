@@ -127,9 +127,11 @@ async def analyze_statement(file: UploadFile = File(...)):
                     f"You are a Gringotts Bank Manager. Analyze this spending: "
                     f"Spent {metrics['total_spent']} Galleons, mostly on {top_cat}. "
                     f"Remaining in Vault: {metrics['left_over']} Galleons. "
-                    f"Give a witty 2 sentence summary and 1 wizarding saving tip. "
+                    f"Give a witty 2 sentence summary and 1 wizard saving tip. "
                     f"End with an encouraging wizard slogan that is fun and memorable. "
                     f"Do not use markup!"
+                    f"Adapt your tone to the spending habits of the user. "
+                    f"Praise savers, criticize spenders with a sassy attitude."
                 )
 
                 response = genai.GenerativeModel("gemini-2.5-flash").generate_content(prompt)
@@ -156,47 +158,6 @@ async def analyze_statement(file: UploadFile = File(...)):
         # Cleanup temp file
         if os.path.exists(filepath):
             os.remove(filepath)
-
-
-# DELETE THIS FUNCTION
-@app.get("/api/test-audio")
-async def test_audio():
-    test_text = "Hello! This is a test of the ElevenLabs text-to-speech audio feature. Your financial advisor can now speak to you directly!"
-    
-    print(f"Testing ElevenLabs audio generation...")
-    
-    audio_url = None
-    if elevenlabs_client:
-        print("ElevenLabs client available, generating audio...")
-        try:
-            audio = elevenlabs_client.text_to_speech.convert(
-                text=test_text,
-                voice_id="EXAVITQu4vr4xnSDxMaL",  # Sarah voice
-                model_id="eleven_turbo_v2_5"
-            )
-            # Convert audio bytes to base64 for frontend
-            audio_data = b"".join(audio)
-            audio_base64 = base64.b64encode(audio_data).decode('utf-8')
-            audio_url = f"data:audio/mpeg;base64,{audio_base64}"
-            print(f"✅ Audio generated successfully! Size: {len(audio_base64)} bytes")
-            
-            return JSONResponse(content={
-                "response": test_text,
-                "audio_url": audio_url,
-                "status": "success"
-            })
-        except Exception as audio_err:
-            print(f"❌ ElevenLabs Error: {audio_err}")
-            return JSONResponse(
-                status_code=500,
-                content={"error": str(audio_err)}
-            )
-    else:
-        print("❌ ElevenLabs client not available (missing API key)")
-        return JSONResponse(
-            status_code=400,
-            content={"error": "ElevenLabs API key not configured"}
-        )
 
 
 # Advisor chat connection

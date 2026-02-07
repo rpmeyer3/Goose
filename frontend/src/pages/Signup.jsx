@@ -131,7 +131,7 @@ export default function Signup() {
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   className="w-full rounded-lg border border-wizard-gold/20 bg-dark-wizard/60 px-4 py-2.5 text-parchment placeholder-parchment/30 focus:border-wizard-gold/60 focus:ring-2 focus:ring-wizard-gold/20 focus:outline-none transition-all"
-                  placeholder="Harry"
+                  placeholder="Arthur"
                 />
               </div>
               <div>
@@ -149,7 +149,7 @@ export default function Signup() {
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   className="w-full rounded-lg border border-wizard-gold/20 bg-dark-wizard/60 px-4 py-2.5 text-parchment placeholder-parchment/30 focus:border-wizard-gold/60 focus:ring-2 focus:ring-wizard-gold/20 focus:outline-none transition-all"
-                  placeholder="Potter"
+                  placeholder="Weasly"
                 />
               </div>
             </div>
@@ -170,7 +170,7 @@ export default function Signup() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full rounded-lg border border-wizard-gold/20 bg-dark-wizard/60 px-4 py-2.5 text-parchment placeholder-parchment/30 focus:border-wizard-gold/60 focus:ring-2 focus:ring-wizard-gold/20 focus:outline-none transition-all"
-                placeholder="harry@hogwarts.edu"
+                placeholder="aweasly@gryffins.com.uk"
               />
             </div>
 
