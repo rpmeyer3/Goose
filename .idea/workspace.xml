@@ -5,12 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="073f56ce-7492-435d-89ba-89ee0e75614a" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/data_generators/generate_sample_BAD_statement.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/UgaHacks11.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/UgaHacks11.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_sample_statement.py" beforeDir="false" afterPath="$PROJECT_DIR$/data_generators/generate_sample_statement.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projectbreakdown" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/render 2.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/byteAbout.webp" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/public/byteAbout.webp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generators/generate_sample_BAD_statement.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/data_generators/generate_sample_BAD_statement.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data_generators/generate_sample_statement.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/data_generators/generate_sample_statement.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/naive_bayes_model.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/vectorizer.pkl" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_gemini.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/test_gemini.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/upload/sample_bank_statement.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/backend/upload/sample_bank_statement.pdf" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,23 +52,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Code",
-    "last_opened_file_path": "/Users/igorgoncalves/Desktop/UgaHacks11",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
-    "ts.external.directory.path": "/Users/igorgoncalves/Desktop/UgaHacks11/frontend/node_modules/typescript/lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Code&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/igorgoncalves/Desktop/UgaHacks11&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;/Users/igorgoncalves/Desktop/UgaHacks11/frontend/node_modules/typescript/lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
@@ -94,7 +98,8 @@
       <workItem from="1770426256627" duration="14000" />
       <workItem from="1770426470238" duration="992000" />
       <workItem from="1770433455220" duration="136000" />
-      <workItem from="1770433602782" duration="10250000" />
+      <workItem from="1770433602782" duration="10295000" />
+      <workItem from="1770477212943" duration="1957000" />
     </task>
     <servers />
   </component>

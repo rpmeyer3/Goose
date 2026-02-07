@@ -65,7 +65,7 @@ class ChatRequest(BaseModel):
 
 @app.get("/")
 async def root():
-    return {"message": "Ronaldo is waaaaay better than Pessi"}
+    return {"message": "fuck ice"}
 
 
 @app.post("/api/analyze-statement")
