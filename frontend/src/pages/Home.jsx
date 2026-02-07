@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { TypeWriter, FadeInSection, MagicSpinner } from "../components/MagicEffects";
 
+const API_BASE = import.meta.env.VITE_API_URL || "";
+
 export default function Home({ setAnalysisData }) {
   const [file, setFile] = useState(null);
   const [dragging, setDragging] = useState(false);
@@ -36,7 +38,7 @@ export default function Home({ setAnalysisData }) {
     formData.append("file", file);
 
     try {
-      const res = await fetch("/api/analyze-statement", {
+      const res = await fetch(`${API_BASE}/api/analyze-statement`, {
         method: "POST",
         body: formData,
       });
