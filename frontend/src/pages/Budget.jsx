@@ -25,6 +25,12 @@ function fmt(n) {
   return n.toLocaleString("en-US", { style: "currency", currency: "USD" });
 }
 
+function prettyCat(name) {
+  return name
+    .replace(/_/g, " ")
+    .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
 export default function Budget({ data }) {
   const navigate = useNavigate();
 
@@ -87,7 +93,7 @@ export default function Budget({ data }) {
         {metrics.category_most_spent && (
           <StatCard
             label="Most Bewitching Category"
-            value={metrics.category_most_spent}
+            value={prettyCat(metrics.category_most_spent)}
             accent="text-red-400"
             sub={fmt(metrics.category_spending[metrics.category_most_spent])}
           />
@@ -95,7 +101,7 @@ export default function Budget({ data }) {
         {metrics.category_least_spent && (
           <StatCard
             label="Most Frugal Enchantment"
-            value={metrics.category_least_spent}
+            value={prettyCat(metrics.category_least_spent)}
             accent="text-sky-400"
             sub={fmt(metrics.category_spending[metrics.category_least_spent])}
           />
@@ -115,7 +121,7 @@ export default function Budget({ data }) {
                 <span
                   className={`text-xs font-display font-semibold px-2.5 py-0.5 rounded-full ${color}`}
                 >
-                  {category}
+                  {prettyCat(category)}
                 </span>
                 <span className="text-sm font-medium text-parchment/70">
                   {fmt(amount)}
@@ -268,7 +274,7 @@ export default function Budget({ data }) {
                   <td className="px-4 py-3 text-parchment/80">{tx.description}</td>
                   <td className="px-4 py-3">
                     <span className="text-xs font-display font-medium px-2 py-0.5 rounded-full bg-wizard-slate text-wizard-gold/80">
-                      {tx.category}
+                      {prettyCat(tx.category)}
                     </span>
                   </td>
                   <td
