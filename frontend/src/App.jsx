@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route, useLocation, useNavigate } from "react-router-dom"; // Added useNavigate
+import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 
 import Navbar from "./components/Navbar";
