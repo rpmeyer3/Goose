@@ -8,12 +8,13 @@ from pipeline import load_model, extract_text_from_pdf, parse_transactions, clas
 app = FastAPI()
 
 # Allow the frontend origin — set FRONTEND_URL env var in production
-frontend_url = os.environ.get("FRONTEND_URL", "http://localhost:5173")
+frontend_url = os.environ.get("FRONTEND_URL", "http://localhost:5173").rstrip("/")
 origins = [frontend_url]
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
+    allow_origin_regex=r"https://.*\.vercel\.app",
     allow_methods=["*"],
     allow_headers=["*"],
 )
