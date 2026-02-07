@@ -2,6 +2,20 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../supabase/AuthContext";
+import {
+  Wand2,
+  BarChart3,
+  ScrollText,
+  FolderArchive,
+  MessageCircle,
+  UserCircle,
+  Sparkles,
+  LogOut,
+  LogIn,
+  UserPlus,
+  Menu,
+  X,
+} from "lucide-react";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -17,35 +31,37 @@ export default function Navbar() {
   const displayName =
     profile?.first_name || user?.user_metadata?.first_name || null;
 
-  const link = ({ isActive }) =>
-    `px-4 py-2 rounded-lg text-sm font-display font-semibold tracking-wide transition-all duration-300 ${
+  const linkClass = ({ isActive }) =>
+    `flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-display font-semibold tracking-wide transition-all duration-200 ${
       isActive
-        ? "bg-wizard-gold/20 text-wizard-gold border border-wizard-gold/40 shadow-glow"
-        : "text-parchment/70 hover:text-wizard-gold hover:bg-wizard-purple/50"
+        ? "bg-wizard-gold/15 text-wizard-gold shadow-[inset_0_0_0_1px_rgba(212,168,67,0.3)]"
+        : "text-parchment/60 hover:text-wizard-gold hover:bg-wizard-purple/40"
     }`;
 
-  const mobileLink = ({ isActive }) =>
-    `block px-4 py-3 rounded-lg text-base font-display font-semibold tracking-wide transition-all duration-300 ${
+  const mobileLinkClass = ({ isActive }) =>
+    `flex items-center gap-2.5 px-4 py-3 rounded-lg text-base font-display font-semibold tracking-wide transition-all duration-200 ${
       isActive
-        ? "bg-wizard-gold/20 text-wizard-gold border border-wizard-gold/40 shadow-glow"
-        : "text-parchment/70 hover:text-wizard-gold hover:bg-wizard-purple/50"
+        ? "bg-wizard-gold/15 text-wizard-gold shadow-[inset_0_0_0_1px_rgba(212,168,67,0.3)]"
+        : "text-parchment/60 hover:text-wizard-gold hover:bg-wizard-purple/40"
     }`;
+
+  const iconSize = 16;
 
   const publicItems = [
-    { to: "/", label: "🪄 Summon" },
-    { to: "/about", label: "🔮 Oracle" },
+    { to: "/", icon: <Wand2 size={iconSize} />, label: "Summon" },
+    { to: "/about", icon: <Sparkles size={iconSize} />, label: "Oracle" },
   ];
 
   const authedItems = [
-    { to: "/dashboard", label: "📊 Rundown" },
-    { to: "/budget", label: "📜 Vault" },
-    { to: "/statements", label: "🗂️ Archive" },
-    { to: "/chat", label: "💬 Advisor" },
-    { to: "/profile", label: "🧙 Profile" },
+    { to: "/dashboard", icon: <BarChart3 size={iconSize} />, label: "Rundown" },
+    { to: "/budget", icon: <ScrollText size={iconSize} />, label: "Vault" },
+    { to: "/statements", icon: <FolderArchive size={iconSize} />, label: "Archive" },
+    { to: "/chat", icon: <MessageCircle size={iconSize} />, label: "Advisor" },
+    { to: "/profile", icon: <UserCircle size={iconSize} />, label: "Profile" },
   ];
 
   const navItems = user
-    ? [{ to: "/", label: "🪄 Summon" }, ...authedItems]
+    ? [{ to: "/", icon: <Wand2 size={iconSize} />, label: "Summon" }, ...authedItems]
     : publicItems;
 
   return (
@@ -55,90 +71,75 @@ export default function Navbar() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="sticky top-0 z-50 bg-dark-wizard/90 backdrop-blur-md border-b border-wizard-gold/20"
     >
-      <div className="max-w-5xl mx-auto flex items-center justify-between px-4 sm:px-6 py-3">
-        <motion.div
-          className="flex items-center gap-2 sm:gap-3"
-          whileHover={{ scale: 1.02 }}
-          transition={{ type: "spring", stiffness: 300 }}
-        >
+      <div className="max-w-6xl mx-auto flex items-center justify-between px-4 sm:px-6 h-14">
+        {/* Logo */}
+        <NavLink to="/" className="flex items-center gap-2 shrink-0">
           <motion.img
             src="/bytehacks11.png"
             alt="Byte's Bank"
-            className="h-8 w-8 sm:h-10 sm:w-10"
+            className="h-8 w-8"
             animate={{ rotate: [0, 5, -5, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
           />
-          <span className="text-lg sm:text-xl font-display font-bold tracking-widest text-wizard-gold drop-shadow-[0_0_8px_rgba(212,168,67,0.5)]">
+          <span className="text-lg font-display font-bold tracking-widest text-wizard-gold drop-shadow-[0_0_8px_rgba(212,168,67,0.5)]">
             Byte's Bank
           </span>
-        </motion.div>
+        </NavLink>
 
         {/* Desktop nav */}
-        <div className="hidden sm:flex items-center gap-2">
-          {navItems.map((item, i) => (
-            <motion.div
-              key={item.to}
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 + i * 0.1, duration: 0.4 }}
-            >
-              <NavLink to={item.to} className={link}>
-                {item.label}
-              </NavLink>
-            </motion.div>
+        <div className="hidden md:flex items-center gap-1">
+          {navItems.map((item) => (
+            <NavLink key={item.to} to={item.to} className={linkClass}>
+              {item.icon}
+              <span>{item.label}</span>
+            </NavLink>
           ))}
 
           {/* Auth section */}
-          {user ? (
-            <div className="flex items-center gap-3 ml-3 pl-3 border-l border-wizard-gold/20">
-              {displayName && (
-                <span className="text-sm text-parchment/70 font-serif">
-                  ⚡ {displayName}
-                </span>
-              )}
-              <button
-                onClick={handleSignOut}
-                className="px-3 py-1.5 rounded-lg text-sm font-display font-semibold text-parchment/60 hover:text-wizard-crimson hover:bg-wizard-crimson/10 border border-transparent hover:border-wizard-crimson/30 transition-all duration-300"
-              >
-                Sign Out
-              </button>
-            </div>
-          ) : (
-            <div className="flex items-center gap-2 ml-3 pl-3 border-l border-wizard-gold/20">
-              <NavLink
-                to="/login"
-                className="px-4 py-2 rounded-lg text-sm font-display font-semibold text-parchment/70 hover:text-wizard-gold hover:bg-wizard-purple/50 transition-all duration-300"
-              >
-                Sign In
-              </NavLink>
-              <NavLink
-                to="/signup"
-                className="px-4 py-2 rounded-lg text-sm font-display font-semibold bg-wizard-gold/90 hover:bg-wizard-gold text-dark-wizard tracking-wide transition-colors shadow-glow"
-              >
-                Sign Up
-              </NavLink>
-            </div>
-          )}
+          <div className="ml-2 pl-3 border-l border-wizard-gold/15 flex items-center gap-2">
+            {user ? (
+              <>
+                {displayName && (
+                  <span className="text-sm text-parchment/50 font-serif hidden lg:inline">
+                    {displayName}
+                  </span>
+                )}
+                <button
+                  onClick={handleSignOut}
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-display font-semibold text-parchment/50 hover:text-wizard-crimson hover:bg-wizard-crimson/10 transition-all duration-200"
+                >
+                  <LogOut size={iconSize} />
+                  <span className="hidden lg:inline">Sign Out</span>
+                </button>
+              </>
+            ) : (
+              <>
+                <NavLink
+                  to="/login"
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-display font-semibold text-parchment/60 hover:text-wizard-gold hover:bg-wizard-purple/40 transition-all duration-200"
+                >
+                  <LogIn size={iconSize} />
+                  <span>Sign In</span>
+                </NavLink>
+                <NavLink
+                  to="/signup"
+                  className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-display font-semibold bg-wizard-gold/90 hover:bg-wizard-gold text-dark-wizard tracking-wide transition-colors shadow-glow"
+                >
+                  <UserPlus size={iconSize} />
+                  <span>Sign Up</span>
+                </NavLink>
+              </>
+            )}
+          </div>
         </div>
 
         {/* Mobile hamburger */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="sm:hidden flex flex-col gap-1.5 p-2"
+          className="md:hidden p-2 text-wizard-gold"
           aria-label="Toggle menu"
         >
-          <motion.span
-            animate={menuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
-            className="block w-6 h-0.5 bg-wizard-gold rounded"
-          />
-          <motion.span
-            animate={menuOpen ? { opacity: 0 } : { opacity: 1 }}
-            className="block w-6 h-0.5 bg-wizard-gold rounded"
-          />
-          <motion.span
-            animate={menuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
-            className="block w-6 h-0.5 bg-wizard-gold rounded"
-          />
+          {menuOpen ? <X size={22} /> : <Menu size={22} />}
         </button>
       </div>
 
@@ -149,34 +150,35 @@ export default function Navbar() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="sm:hidden overflow-hidden bg-dark-wizard/95 backdrop-blur-md border-t border-wizard-gold/10"
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="md:hidden overflow-hidden bg-dark-wizard/95 backdrop-blur-md border-t border-wizard-gold/10"
           >
-            <div className="flex flex-col gap-1 px-4 py-3">
+            <div className="flex flex-col gap-0.5 px-4 py-3">
               {navItems.map((item) => (
                 <NavLink
                   key={item.to}
                   to={item.to}
-                  className={mobileLink}
+                  className={mobileLinkClass}
                   onClick={() => setMenuOpen(false)}
                 >
+                  {item.icon}
                   {item.label}
                 </NavLink>
               ))}
 
-              {/* Mobile auth section */}
               <div className="mt-2 pt-2 border-t border-wizard-gold/10">
                 {user ? (
                   <>
                     {displayName && (
-                      <p className="px-4 py-2 text-sm text-parchment/50 font-serif">
-                        ⚡ {displayName}
+                      <p className="px-4 py-2 text-sm text-parchment/40 font-serif">
+                        Signed in as {displayName}
                       </p>
                     )}
                     <button
                       onClick={handleSignOut}
-                      className="block w-full text-left px-4 py-3 rounded-lg text-base font-display font-semibold text-parchment/60 hover:text-wizard-crimson hover:bg-wizard-crimson/10 transition-all duration-300"
+                      className="flex items-center gap-2.5 w-full text-left px-4 py-3 rounded-lg text-base font-display font-semibold text-parchment/50 hover:text-wizard-crimson hover:bg-wizard-crimson/10 transition-all duration-200"
                     >
+                      <LogOut size={18} />
                       Sign Out
                     </button>
                   </>
@@ -184,16 +186,18 @@ export default function Navbar() {
                   <>
                     <NavLink
                       to="/login"
-                      className={mobileLink}
+                      className={mobileLinkClass}
                       onClick={() => setMenuOpen(false)}
                     >
+                      <LogIn size={18} />
                       Sign In
                     </NavLink>
                     <NavLink
                       to="/signup"
-                      className={mobileLink}
+                      className={mobileLinkClass}
                       onClick={() => setMenuOpen(false)}
                     >
+                      <UserPlus size={18} />
                       Sign Up
                     </NavLink>
                   </>

@@ -3,6 +3,7 @@ import { Routes, Route, useLocation, useNavigate } from "react-router-dom"; // A
 import { AnimatePresence, motion } from "framer-motion";
 
 import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { MagicParticles, Parallax3DBackground } from "./components/MagicEffects";
 import LoadingOverlay from "./components/LoadingOverlay";
@@ -145,6 +146,7 @@ export default function App() {
           </motion.div>
         </AnimatePresence>
       </main>
+      <Footer />
     </div>
   );
 }
