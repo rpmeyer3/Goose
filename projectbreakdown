@@ -1,0 +1,111 @@
+
+
+
+
+
+
+of ⁨3⁩
+
+
+
+
+UGAHacks11 Project Breakdown
+Members:
+- Igor Goncalves: Machine Learning
+- Jordan Delp: Backend Engineer
+- Ryan Meyer: Frontend Engineer
+Project Name: Impendios
+Goal: To create a Bank Statement analyzer application that intakes the
+statement pdf, categorizes/finds patterns to then display in a neat and digestible
+manner.
+Tech Stack:
+Frontend: React Vite
+Backend: FastAPI
+Model: Naive Bayes
+Libraries: pdfplumber, sklearn, numpy, pandas, pickle, …
+MVP Features:
+- Home Page
+- Budget Page
+- total income earned
+- total income spent
+- left over amount
+- spending by category
+- category most spent
+- category least spent
+Bonus Features:
+- About Page
+- more info about project
+- about each member
+- Custom Loading Page
+- Contact Page
+- Auth
+Data Pipeline:
+┌─────────────┐
+│ BROWSER │
+│ (React UI) │
+└──────┬──────┘
+│
+│ 1. User uploads PDF
+│ POST /api/analyze-statement
+│
+▼
+┌─────────────────────────────────────┐
+│ FASTAPI BACKEND │
+│ │
+│ ┌───────────────────────────────┐ │
+│ │ 1. Save PDF to uploads/ │ │
+│ └───────────────────────────────┘ │
+│ │ │
+│ ▼ │
+│ ┌───────────────────────────────┐ │
+│ │ 2. Extract text (pdfplumber) │ │
+│ └───────────────────────────────┘ │
+│ │ │
+│ ▼ │
+│ ┌───────────────────────────────┐ │
+│ │ 3. Parse → DataFrame │ │
+│ └───────────────────────────────┘ │
+│ │ │
+│ ▼ │
+│ ┌───────────────────────────────┐ │ # May not be necessary
+│ │ 4. Clean data │ │
+│ └───────────────────────────────┘ │ # Due to synthetic data
+│ │ │
+│ ▼ │
+│ ┌───────────────────────────────┐ │
+│ │ 5. ML Classification │ │
+│ │ (Load model.pkl) │ │
+│ └───────────────────────────────┘ │
+│ │ │
+│ ▼ │
+│ ┌───────────────────────────────┐ │
+│ │ 6. Calculate metrics │ │
+│ │ - Summary │ │
+│ │ - Categories │ │
+│ │ - Daily spending │ │
+│ └───────────────────────────────┘ │
+│ │ │
+│ ▼ │
+│ ┌───────────────────────────────┐ │
+│ │ 7. Delete PDF │ │
+│ └───────────────────────────────┘ │
+│ │ │
+│ ▼ │
+│ ┌───────────────────────────────┐ │
+│ │ 8. Return JSON │ │
+│ └───────────────────────────────┘ │
+└─────────────┬───────────────────────┘
+│
+│ JSON Response with ALL data
+│
+▼
+┌─────────────┐
+│ BROWSER │
+│ (Display) │
+└─────────────┘
+📦 PERSISTENT FILES:
+- models/model.pkl (ML model - never deleted)
+- models/vectorizer.pkl (Vectorizer - never deleted)
+🗑 TEMPORARY FILES:
+- uploads/temp_xyz.pdf (Deleted after processing)
+❌ NO DATABASE NEEDED
