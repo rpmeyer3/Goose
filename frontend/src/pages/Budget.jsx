@@ -26,9 +26,20 @@ function fmt(n) {
 }
 
 function prettyCat(name) {
-  return name
-    .replace(/_/g, " ")
-    .replace(/\b\w/g, (c) => c.toUpperCase());
+  const WIZARD_NAMES = {
+    potions_ingredients: "Potions & Elixirs",
+    magical_supplies: "Magical Provisions",
+    books_education: "Spellbooks & Scrolls",
+    food_dining: "Sustenance & Feasts",
+    clothing_robes: "Robes & Garments",
+    transportation: "Broomsticks & Portkeys",
+    entertainment: "Enchanted Amusements",
+    healthcare: "Healing & Remedies",
+    pets_familiars: "Familiars & Creatures",
+    utilities_services: "Owl Post & Utilities",
+    defense_equipment: "Dark Arts Defense",
+  };
+  return WIZARD_NAMES[name] || name.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
 export default function Budget({ data }) {
