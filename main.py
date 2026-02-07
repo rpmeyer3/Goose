@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import google.generativeai as genai
+from elevenlabs.client import ElevenLabs
 from pipeline import (
     load_model,
     extract_text_from_pdf,
@@ -33,11 +34,18 @@ app.add_middleware(
 )
 
 # 3. Initialize Gemini Client
-api_key = os.getenv("GEMINI_API_KEY")
+api_key = os.getenv("GOOGLE_API_KEY")
 if not api_key:
-    print("⚠️ WARNING: GEMINI_API_KEY not found in .env file!")
+    print("⚠️ WARNING: GOOGLE_API_KEY not found in .env file!")
 
 genai.configure(api_key=api_key)
+
+# Initialize ElevenLabs Client
+elevenlabs_api_key = os.getenv("ELEVENLABS_API_KEY")
+elevenlabs_client = ElevenLabs(api_key=elevenlabs_api_key) if elevenlabs_api_key else None
+
+if not elevenlabs_api_key:
+    print("⚠️ WARNING: ELEVENLABS_API_KEY not found in .env file! Audio generation disabled.")
 
 # 4. Setup Directories and Models
 UPLOAD_DIR = os.path.join(os.path.dirname(__file__), "uploads")
@@ -135,11 +143,57 @@ async def analyze_statement(file: UploadFile = File(...)):
             os.remove(filepath)
 
 
+@app.get("/api/test-audio")
+async def test_audio():
+    """
+    Test endpoint for ElevenLabs audio generation (no Gemini API call)
+    """
+    test_text = "Hello! This is a test of the ElevenLabs text-to-speech audio feature. Your financial advisor can now speak to you directly!"
+    
+    print(f"Testing ElevenLabs audio generation...")
+    
+    audio_url = None
+    if elevenlabs_client:
+        print("ElevenLabs client available, generating audio...")
+        try:
+            audio = elevenlabs_client.text_to_speech.convert(
+                text=test_text,
+                voice_id="EXAVITQu4vr4xnSDxMaL",  # Sarah voice
+                model_id="eleven_turbo_v2_5"
+            )
+            # Convert audio bytes to base64 for frontend
+            import base64
+            audio_data = b"".join(audio)
+            audio_base64 = base64.b64encode(audio_data).decode('utf-8')
+            audio_url = f"data:audio/mpeg;base64,{audio_base64}"
+            print(f"✅ Audio generated successfully! Size: {len(audio_base64)} bytes")
+            
+            return JSONResponse(content={
+                "response": test_text,
+                "audio_url": audio_url,
+                "status": "success"
+            })
+        except Exception as audio_err:
+            print(f"❌ ElevenLabs Error: {audio_err}")
+            return JSONResponse(
+                status_code=500,
+                content={"error": str(audio_err)}
+            )
+    else:
+        print("❌ ElevenLabs client not available (missing API key)")
+        return JSONResponse(
+            status_code=400,
+            content={"error": "ElevenLabs API key not configured"}
+        )
+
+
 @app.post("/api/chat")
 async def chat(request: ChatRequest):
     """
-    Chat endpoint for AI Financial Advisor powered by Gemini
+    Chat endpoint for AI Financial Advisor powered by Gemini with ElevenLabs audio
     """
+    print(f"Received chat request: {request.message}")
+    
     if not request.message:
         raise HTTPException(status_code=400, detail="Message cannot be empty")
 
@@ -175,13 +229,41 @@ Based on their spending habits and question, provide personalized, practical fin
         # Call Gemini API
         response = genai.GenerativeModel("gemini-2.5-flash").generate_content(prompt)
 
-        if response and response.text:
-            return JSONResponse(content={"response": response.text})
+        text_response = response.text if response and response.text else "The spell misfired! Please try again. 🔮"
+        
+        print(f"Gemini response received: {text_response[:100]}...")
+        
+        # Generate audio with ElevenLabs if available
+        audio_url = None
+        if elevenlabs_client:
+            print("ElevenLabs client available, generating audio...")
+            try:
+                audio = elevenlabs_client.text_to_speech.convert(
+                    text=text_response,
+                    voice_id="EXAVITQu4vr4xnSDxMaL",  # Sarah voice
+                    model_id="eleven_turbo_v2_5"
+                )
+                # Convert audio bytes to base64 for frontend
+                import base64
+                audio_data = b"".join(audio)
+                audio_base64 = base64.b64encode(audio_data).decode('utf-8')
+                audio_url = f"data:audio/mpeg;base64,{audio_base64}"
+                print(f"Audio generated successfully, size: {len(audio_base64)} bytes")
+            except Exception as audio_err:
+                print(f"ElevenLabs Error: {audio_err}")
+                # Continue without audio if it fails
         else:
-            return JSONResponse(content={"response": "The spell misfired! Please try again. 🔮"})
+            print("ElevenLabs client not available (missing API key)")
+
+        return JSONResponse(content={
+            "response": text_response,
+            "audio_url": audio_url
+        })
 
     except Exception as e:
         print(f"Chat Error: {e}")
+        import traceback
+        traceback.print_exc()
         raise HTTPException(status_code=500, detail=f"Chat error: {str(e)}")
 
 

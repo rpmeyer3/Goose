@@ -12,11 +12,13 @@ export default function Chat({ data }) {
           id: 1,
           sender: "advisor",
           text: `Greetings, financial explorer! 🧙 I've analyzed your spending and I'm ready to help. Ask me anything about your finances, budget optimization, or spending habits!`,
+          audio_url: null,
         }
       : {
           id: 1,
           sender: "advisor",
           text: "Greetings, curious financial explorer! 🧙 I'm your AI Financial Advisor, powered by Gemini's mystical wisdom. Upload a bank statement first on the Home page to get started, then ask me anything about your finances!",
+          audio_url: null,
         };
     return [greeting];
   });
@@ -68,7 +70,11 @@ export default function Chat({ data }) {
         }),
       });
 
-      if (!response.ok) throw new Error("Failed to get response");
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("API Error:", errorText);
+        throw new Error("Failed to get response");
+      }
       const result = await response.json();
 
       setMessages((prev) => [
@@ -77,6 +83,7 @@ export default function Chat({ data }) {
           id: prev.length + 1,
           sender: "advisor",
           text: result.response,
+          audio_url: result.audio_url || null,
         },
       ]);
     } catch (error) {
@@ -130,6 +137,15 @@ export default function Chat({ data }) {
                     }`}
                   >
                     <p className="text-sm sm:text-base">{msg.text}</p>
+                    {msg.audio_url && (
+                      <div className="mt-3 pt-3 border-t border-purple-400/30">
+                        <audio
+                          controls
+                          className="w-full h-8 accent-wizard-gold"
+                          src={msg.audio_url}
+                        />
+                      </div>
+                    )}
                   </div>
                 </motion.div>
               ))}
