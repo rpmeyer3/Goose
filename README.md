@@ -1,4 +1,4 @@
-# Impendios
+# Byte's Bank
 
 A full-stack bank statement analyzer built at **UGA Hacks 11**. Upload a PDF bank statement and instantly get a categorized spending breakdown powered by machine learning.
 
