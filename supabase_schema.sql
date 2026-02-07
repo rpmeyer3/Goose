@@ -177,14 +177,10 @@ declare
   new_total int;
   new_rank  public.wizard_rank;
 begin
-  -- Increment the user's lifetime analysis count
-  update public.profiles
-    set total_analyses   = total_analyses + 1,
-        last_analysis_at = now()
-    where id = new.user_id
-    returning total_analyses into new_total;
+  -- Increment analysis count, compute rank, apply in a single UPDATE
+  select total_analyses + 1 into new_total
+    from public.profiles where id = new.user_id;
 
-  -- Determine rank based on milestone thresholds
   new_rank := case
     when new_total >= 50 then 'Order of Merlin'
     when new_total >= 30 then 'Auror'
@@ -195,7 +191,9 @@ begin
   end;
 
   update public.profiles
-    set wizard_rank = new_rank
+    set total_analyses   = new_total,
+        last_analysis_at = now(),
+        wizard_rank      = new_rank
     where id = new.user_id;
 
   return new;
