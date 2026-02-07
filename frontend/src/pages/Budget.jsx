@@ -135,35 +135,117 @@ export default function Budget({ data }) {
         )}
       </div>
 
-      {dailyEntries.length > 0 && (
-        <>
-          <h2 className="text-xl font-semibold mb-5">Daily Spending</h2>
-          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-12">
-            <div className="flex items-end gap-1 h-40">
-              {dailyEntries.map(([date, amount]) => {
-                const pct = Math.max((amount / maxDaily) * 100, 4);
-                return (
-                  <div
-                    key={date}
-                    className="flex-1 flex flex-col items-center justify-end gap-1 group"
-                  >
-                    <span className="text-[10px] text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity">
-                      {fmt(amount)}
-                    </span>
-                    <div
-                      className="w-full max-w-[28px] bg-indigo-500 rounded-t-md transition-all hover:bg-indigo-600"
-                      style={{ height: `${pct}%` }}
-                    />
-                    <span className="text-[9px] text-gray-400 truncate w-full text-center">
-                      {date}
-                    </span>
-                  </div>
-                );
-              })}
+      {dailyEntries.length > 0 && (() => {
+        const CHART_W = 700;
+        const CHART_H = 220;
+        const PAD = { top: 20, right: 20, bottom: 50, left: 60 };
+        const plotW = CHART_W - PAD.left - PAD.right;
+        const plotH = CHART_H - PAD.top - PAD.bottom;
+
+        // Y-axis ticks
+        const niceMax = Math.ceil(maxDaily / 50) * 50 || 50;
+        const yTicks = [];
+        const yStep = niceMax <= 200 ? 50 : niceMax <= 500 ? 100 : Math.ceil(niceMax / 5 / 100) * 100;
+        for (let v = 0; v <= niceMax; v += yStep) yTicks.push(v);
+
+        // Map data to points
+        const points = dailyEntries.map(([date, amount], i) => {
+          const x = PAD.left + (dailyEntries.length === 1 ? plotW / 2 : (i / (dailyEntries.length - 1)) * plotW);
+          const y = PAD.top + plotH - (amount / niceMax) * plotH;
+          return { x, y, date, amount };
+        });
+
+        // Build SVG line + area
+        const lineD = points.map((p, i) => `${i === 0 ? "M" : "L"}${p.x},${p.y}`).join(" ");
+        const areaD = `${lineD} L${points[points.length - 1].x},${PAD.top + plotH} L${points[0].x},${PAD.top + plotH} Z`;
+
+        return (
+          <>
+            <h2 className="text-xl font-semibold mb-5">Daily Spending</h2>
+            <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 mb-12 overflow-hidden">
+              <svg
+                viewBox={`0 0 ${CHART_W} ${CHART_H}`}
+                className="w-full h-auto"
+                preserveAspectRatio="xMidYMid meet"
+              >
+                {/* gradient fill under line */}
+                <defs>
+                  <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="#6366f1" stopOpacity="0.35" />
+                    <stop offset="100%" stopColor="#6366f1" stopOpacity="0.03" />
+                  </linearGradient>
+                </defs>
+
+                {/* horizontal grid lines + Y-axis labels */}
+                {yTicks.map((v) => {
+                  const y = PAD.top + plotH - (v / niceMax) * plotH;
+                  return (
+                    <g key={v}>
+                      <line x1={PAD.left} x2={PAD.left + plotW} y1={y} y2={y} stroke="#e5e7eb" strokeWidth="1" />
+                      <text x={PAD.left - 8} y={y + 3} textAnchor="end" fontSize="10" fill="#9ca3af">
+                        ${v}
+                      </text>
+                    </g>
+                  );
+                })}
+
+                {/* Y-axis line */}
+                <line x1={PAD.left} x2={PAD.left} y1={PAD.top} y2={PAD.top + plotH} stroke="#d1d5db" strokeWidth="1" />
+
+                {/* X-axis line */}
+                <line x1={PAD.left} x2={PAD.left + plotW} y1={PAD.top + plotH} y2={PAD.top + plotH} stroke="#d1d5db" strokeWidth="1" />
+
+                {/* filled area */}
+                <path d={areaD} fill="url(#areaGrad)" />
+
+                {/* line */}
+                <path d={lineD} fill="none" stroke="#6366f1" strokeWidth="2.5" strokeLinejoin="round" strokeLinecap="round" />
+
+                {/* dots + hover targets */}
+                {points.map((p) => {
+                  const shortDate = p.date.replace(/^0?(\d+)\/0?(\d+)\/\d+$/, "$1/$2");
+                  return (
+                    <g key={p.date} className="group">
+                      {/* invisible wider hit area */}
+                      <circle cx={p.x} cy={p.y} r="10" fill="transparent" className="cursor-pointer" />
+                      {/* visible dot */}
+                      <circle cx={p.x} cy={p.y} r="4" fill="#6366f1" stroke="white" strokeWidth="2" />
+                      {/* tooltip on hover */}
+                      <g className="opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+                        <rect x={p.x - 36} y={p.y - 32} width="72" height="20" rx="6" fill="#1e1b4b" />
+                        <text x={p.x} y={p.y - 18} textAnchor="middle" fontSize="10" fill="white" fontWeight="600">
+                          {fmt(p.amount)}
+                        </text>
+                      </g>
+                    </g>
+                  );
+                })}
+
+                {/* X-axis date labels */}
+                {points.map((p, i) => {
+                  const shortDate = p.date.replace(/^0?(\d+)\/0?(\d+)\/\d+$/, "$1/$2");
+                  // show every label if ≤15 points, otherwise every other
+                  const showLabel = dailyEntries.length <= 15 || i % 2 === 0;
+                  if (!showLabel) return null;
+                  return (
+                    <text
+                      key={p.date}
+                      x={p.x}
+                      y={PAD.top + plotH + 16}
+                      textAnchor="middle"
+                      fontSize="9"
+                      fill="#9ca3af"
+                      transform={`rotate(-45, ${p.x}, ${PAD.top + plotH + 16})`}
+                    >
+                      {shortDate}
+                    </text>
+                  );
+                })}
+              </svg>
             </div>
-          </div>
-        </>
-      )}
+          </>
+        );
+      })()}
 
       <div className="pt-8 border-t border-gray-200">
         <h2 className="text-xl font-semibold mb-4">Transactions</h2>
