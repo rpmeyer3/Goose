@@ -1,9 +1,21 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "../supabase/AuthContext";
 
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { user, profile, signOut } = useAuth();
+  const navigate = useNavigate();
+
+  async function handleSignOut() {
+    await signOut();
+    setMenuOpen(false);
+    navigate("/login");
+  }
+
+  const displayName =
+    profile?.first_name || user?.user_metadata?.first_name || null;
 
   const link = ({ isActive }) =>
     `px-4 py-2 rounded-lg text-sm font-display font-semibold tracking-wide transition-all duration-300 ${
@@ -52,7 +64,7 @@ export default function Navbar() {
         </motion.div>
 
         {/* Desktop nav */}
-        <div className="hidden sm:flex gap-2">
+        <div className="hidden sm:flex items-center gap-2">
           {navItems.map((item, i) => (
             <motion.div
               key={item.to}
@@ -65,6 +77,38 @@ export default function Navbar() {
               </NavLink>
             </motion.div>
           ))}
+
+          {/* Auth section */}
+          {user ? (
+            <div className="flex items-center gap-3 ml-3 pl-3 border-l border-wizard-gold/20">
+              {displayName && (
+                <span className="text-sm text-parchment/70 font-serif">
+                  ⚡ {displayName}
+                </span>
+              )}
+              <button
+                onClick={handleSignOut}
+                className="px-3 py-1.5 rounded-lg text-sm font-display font-semibold text-parchment/60 hover:text-wizard-crimson hover:bg-wizard-crimson/10 border border-transparent hover:border-wizard-crimson/30 transition-all duration-300"
+              >
+                Sign Out
+              </button>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2 ml-3 pl-3 border-l border-wizard-gold/20">
+              <NavLink
+                to="/login"
+                className="px-4 py-2 rounded-lg text-sm font-display font-semibold text-parchment/70 hover:text-wizard-gold hover:bg-wizard-purple/50 transition-all duration-300"
+              >
+                Sign In
+              </NavLink>
+              <NavLink
+                to="/signup"
+                className="px-4 py-2 rounded-lg text-sm font-display font-semibold bg-wizard-gold/90 hover:bg-wizard-gold text-dark-wizard tracking-wide transition-colors shadow-glow"
+              >
+                Sign Up
+              </NavLink>
+            </div>
+          )}
         </div>
 
         {/* Mobile hamburger */}
@@ -109,6 +153,42 @@ export default function Navbar() {
                   {item.label}
                 </NavLink>
               ))}
+
+              {/* Mobile auth section */}
+              <div className="mt-2 pt-2 border-t border-wizard-gold/10">
+                {user ? (
+                  <>
+                    {displayName && (
+                      <p className="px-4 py-2 text-sm text-parchment/50 font-serif">
+                        ⚡ {displayName}
+                      </p>
+                    )}
+                    <button
+                      onClick={handleSignOut}
+                      className="block w-full text-left px-4 py-3 rounded-lg text-base font-display font-semibold text-parchment/60 hover:text-wizard-crimson hover:bg-wizard-crimson/10 transition-all duration-300"
+                    >
+                      Sign Out
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <NavLink
+                      to="/login"
+                      className={mobileLink}
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      Sign In
+                    </NavLink>
+                    <NavLink
+                      to="/signup"
+                      className={mobileLink}
+                      onClick={() => setMenuOpen(false)}
+                    >
+                      Sign Up
+                    </NavLink>
+                  </>
+                )}
+              </div>
             </div>
           </motion.div>
         )}

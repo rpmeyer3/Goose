@@ -2,11 +2,15 @@ import { useState, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Navbar from "./components/Navbar";
+import ProtectedRoute from "./components/ProtectedRoute";
 import { MagicParticles, Parallax3DBackground } from "./components/MagicEffects";
 import Home from "./pages/Home";
 import Budget from "./pages/Budget";
 import Chat from "./pages/Chat";
 import About from "./pages/About";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
+import AuthCallback from "./pages/AuthCallback";
 
 const pageVariants = {
   initial: { opacity: 0, y: 20, filter: "blur(4px)" },
@@ -40,9 +44,26 @@ export default function App() {
             exit="exit"
           >
             <Routes location={location}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/auth/callback" element={<AuthCallback />} />
               <Route path="/" element={<Home setAnalysisData={setAnalysisData} />} />
-              <Route path="/budget" element={<Budget data={analysisData} />} />
-              <Route path="/chat" element={<Chat data={analysisData} />} />
+              <Route
+                path="/budget"
+                element={
+                  <ProtectedRoute>
+                    <Budget data={analysisData} />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/chat"
+                element={
+                  <ProtectedRoute>
+                    <Chat data={analysisData} />
+                  </ProtectedRoute>
+                }
+              />
               <Route path="/about" element={<About />} />
             </Routes>
           </motion.div>
