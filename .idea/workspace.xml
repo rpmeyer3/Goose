@@ -4,7 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="073f56ce-7492-435d-89ba-89ee0e75614a" name="Changes" comment="" />
+    <list default="true" id="073f56ce-7492-435d-89ba-89ee0e75614a" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.env" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/autoprefixer" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/autoprefixer" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/baseline-browser-mapping" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/baseline-browser-mapping" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/browserslist" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/browserslist" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/cssesc" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/cssesc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/esbuild" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/esbuild" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/jiti" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/jiti" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/jsesc" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/jsesc" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/json5" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/json5" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/loose-envify" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/loose-envify" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/nanoid" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/nanoid" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/parser" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/parser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/resolve" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/resolve" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/rollup" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/rollup" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/semver" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/semver" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/sucrase" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/sucrase" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/sucrase-node" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/sucrase-node" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/tailwind" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/tailwind" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/tailwindcss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/tailwindcss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/update-browserslist-db" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/update-browserslist-db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.bin/vite" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.bin/vite" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/.package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/.package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/node_modules/esbuild/bin/esbuild" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/node_modules/esbuild/bin/esbuild" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/igor-training-data.py" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -83,7 +109,7 @@
       <workItem from="1770426256627" duration="14000" />
       <workItem from="1770426470238" duration="992000" />
       <workItem from="1770433455220" duration="136000" />
-      <workItem from="1770433602782" duration="1302000" />
+      <workItem from="1770433602782" duration="2662000" />
     </task>
     <servers />
   </component>
