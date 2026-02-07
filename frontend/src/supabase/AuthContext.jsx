@@ -92,6 +92,13 @@ export function AuthProvider({ children }) {
     setProfile(null);
   }
 
+  /** Re-fetch the profile row (call after .update()) */
+  async function refreshProfile() {
+    if (!session?.user) return;
+    const p = await fetchProfile(session.user.id);
+    setProfile(p);
+  }
+
   const value = {
     session,
     user: session?.user ?? null,
@@ -100,6 +107,7 @@ export function AuthProvider({ children }) {
     signUp,
     signIn,
     signOut,
+    refreshProfile,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
