@@ -31,7 +31,7 @@ const STEPS = [
 
 export default function About() {
   return (
-    <div className="max-w-3xl mx-auto px-6 py-14">
+    <div className="max-w-3xl mx-auto px-4 sm:px-6 py-10 sm:py-14">
       <FadeInSection>
         <h1 className="text-3xl font-display font-bold mb-3 text-wizard-gold drop-shadow-[0_0_12px_rgba(212,168,67,0.4)]">
           🔮 About Byte's Bank
@@ -39,7 +39,7 @@ export default function About() {
       </FadeInSection>
 
       <FadeInSection delay={0.15}>
-        <p className="text-parchment/50 mb-10 max-w-xl font-serif italic">
+        <p className="text-parchment/50 mb-8 sm:mb-10 max-w-xl font-serif italic text-sm sm:text-base">
           Byte's Bank is a magical bank statement analyzer forged at UGA Hacks 11. Present
           a parchment scroll (PDF) and the enchantment shall reveal all thy income, spending habits,
           and category-level breakdowns — powered by arcane machine learning sorcery.
@@ -72,7 +72,7 @@ export default function About() {
         <h2 className="text-xl font-display font-semibold mb-5 text-wizard-gold-light">⚡ The Order of Developers</h2>
       </FadeInSection>
 
-      <StaggerContainer className="grid grid-cols-1 sm:grid-cols-3 gap-5" stagger={0.15}>
+      <StaggerContainer className="grid grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-5" stagger={0.15}>
         {MEMBERS.map((m) => (
           <StaggerItem key={m.name}>
             <TiltCard className="h-full">

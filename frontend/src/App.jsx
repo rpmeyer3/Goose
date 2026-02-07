@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import Navbar from "./components/Navbar";
@@ -16,10 +16,17 @@ const pageVariants = {
 export default function App() {
   const [analysisData, setAnalysisData] = useState(null);
   const location = useLocation();
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 640);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 640);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-dark-wizard stars-bg relative">
-      <MagicParticles count={25} />
+    <div className="min-h-screen flex flex-col bg-dark-wizard stars-bg relative overflow-x-hidden">
+      {!isMobile && <MagicParticles count={25} />}
       <Navbar />
       <main className="flex-1 relative z-10">
         <AnimatePresence mode="wait">
