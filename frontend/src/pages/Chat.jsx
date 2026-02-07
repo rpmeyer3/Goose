@@ -26,6 +26,13 @@ export default function Chat({ data }) {
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef(null);
 
+  const exampleQuestions = [
+    "How can I save more money?",
+    "Why am I spending so much on entertainment?",
+    "What's my average daily spending?",
+    "Give me personalized budget advice",
+  ];
+
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -34,14 +41,15 @@ export default function Chat({ data }) {
     scrollToBottom();
   }, [messages]);
 
-  const handleSendMessage = async () => {
-    if (!inputValue.trim()) return;
+  const handleSendMessage = async (messageText) => {
+    const textToSend = messageText || inputValue;
+    if (!textToSend.trim()) return;
 
     // Add user message
     const userMessage = {
       id: messages.length + 1,
       sender: "user",
-      text: inputValue,
+      text: textToSend,
     };
     setMessages((prev) => [...prev, userMessage]);
     setInputValue("");
@@ -64,7 +72,7 @@ export default function Chat({ data }) {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          message: inputValue,
+          message: textToSend,
           spending_data: data.metrics,
           transaction_count: data.transactions.length,
         }),
@@ -184,7 +192,7 @@ export default function Chat({ data }) {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
-                  onClick={handleSendMessage}
+                  onClick={() => handleSendMessage()}
                   disabled={loading || !inputValue.trim()}
                   className="bg-gradient-to-r from-wizard-gold to-yellow-500 text-dark-wizard font-bold px-6 py-3 rounded-lg hover:shadow-lg hover:shadow-yellow-500/50 disabled:opacity-50 disabled:cursor-not-allowed transition"
                 >
@@ -194,7 +202,7 @@ export default function Chat({ data }) {
             </div>
           </motion.div>
 
-          {/* Info Box */}
+          {/* Info Box with Clickable Examples */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -202,12 +210,20 @@ export default function Chat({ data }) {
             className="mt-8 bg-dark-purple/30 border border-purple-500/20 rounded-lg p-6"
           >
             <h3 className="text-purple-300 font-bold mb-3">💡 Try asking:</h3>
-            <ul className="text-purple-200/70 text-sm space-y-2">
-              <li>✨ "How can I save more money?"</li>
-              <li>✨ "Why am I spending so much on [category]?"</li>
-              <li>✨ "What's my average daily spending?"</li>
-              <li>✨ "Give me personalized budget advice"</li>
-            </ul>
+            <div className="flex flex-wrap gap-2">
+              {exampleQuestions.map((question, idx) => (
+                <motion.button
+                  key={idx}
+                  whileHover={{ scale: 1.02, boxShadow: "0 0 20px rgba(168, 85, 247, 0.3)" }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => handleSendMessage(question)}
+                  disabled={loading}
+                  className="bg-purple-600/20 hover:bg-purple-600/40 border border-purple-500/30 hover:border-purple-400/60 text-purple-200 px-4 py-2 rounded-lg text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  ✨ "{question}"
+                </motion.button>
+              ))}
+            </div>
           </motion.div>
         </div>
       </FadeInSection>
