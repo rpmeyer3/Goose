@@ -1,5 +1,5 @@
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { useRef, useEffect, useState, useCallback } from "react";
+import { useRef, useEffect, useState } from "react";
 
 // Scroll-triggered fade-in section (like your personal site)
 export function FadeInSection({ children, delay = 0, direction = "up", className = "" }) {
@@ -99,14 +99,17 @@ export function TypeWriter({ words, className = "" }) {
 
 // Floating magical particles
 export function MagicParticles({ count = 20 }) {
-  const particles = Array.from({ length: count }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: Math.random() * 4 + 1,
-    duration: Math.random() * 4 + 3,
-    delay: Math.random() * 3,
-  }));
+  // Memoize so particles don't re-randomize on parent re-renders
+  const particles = useRef(
+    Array.from({ length: count }, (_, i) => ({
+      id: i,
+      x: Math.random() * 100,
+      y: Math.random() * 100,
+      size: Math.random() * 4 + 1,
+      duration: Math.random() * 4 + 3,
+      delay: Math.random() * 3,
+    }))
+  ).current;
 
   return (
     <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
@@ -215,29 +218,42 @@ export function MagicSpinner() {
 }
 
 // 3D parallax background that responds to mouse movement
+// Uses direct DOM refs instead of setState to avoid 60fps React re-renders
 export function Parallax3DBackground() {
-  const [mouse, setMouse] = useState({ x: 0, y: 0 });
+  const sceneRef = useRef(null);
   const rafRef = useRef(null);
   const targetRef = useRef({ x: 0, y: 0 });
-
-  const handleMouseMove = useCallback((e) => {
-    // Normalize to -1 to 1 range centered on viewport
-    targetRef.current = {
-      x: (e.clientX / window.innerWidth - 0.5) * 2,
-      y: (e.clientY / window.innerHeight - 0.5) * 2,
-    };
-  }, []);
+  const currentRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
-    window.addEventListener("mousemove", handleMouseMove);
+    function handleMouseMove(e) {
+      targetRef.current = {
+        x: (e.clientX / window.innerWidth - 0.5) * 2,
+        y: (e.clientY / window.innerHeight - 0.5) * 2,
+      };
+    }
 
-    let current = { x: 0, y: 0 };
+    window.addEventListener("mousemove", handleMouseMove, { passive: true });
 
     function animate() {
-      // Smooth lerp for fluid motion
-      current.x += (targetRef.current.x - current.x) * 0.05;
-      current.y += (targetRef.current.y - current.y) * 0.05;
-      setMouse({ x: current.x, y: current.y });
+      const cur = currentRef.current;
+      const tgt = targetRef.current;
+      cur.x += (tgt.x - cur.x) * 0.05;
+      cur.y += (tgt.y - cur.y) * 0.05;
+
+      const rx = cur.y * -3; // tilt up/down
+      const ry = cur.x * 3;  // tilt left/right
+
+      // Apply transforms directly to DOM — zero React re-renders
+      const el = sceneRef.current;
+      if (el) {
+        const layers = el.children;
+        if (layers[0]) layers[0].style.transform = `translate3d(${cur.x * -8}px, ${cur.y * -8}px, -100px) rotateX(${rx * 0.3}deg) rotateY(${ry * 0.3}deg)`;
+        if (layers[1]) layers[1].style.transform = `translate3d(${cur.x * -18}px, ${cur.y * -18}px, -50px) rotateX(${rx * 0.5}deg) rotateY(${ry * 0.5}deg)`;
+        if (layers[2]) layers[2].style.transform = `translate3d(${cur.x * -30}px, ${cur.y * -30}px, 0px) rotateX(${rx * 0.8}deg) rotateY(${ry * 0.8}deg)`;
+        if (layers[3]) layers[3].style.transform = `translate3d(${cur.x * -45}px, ${cur.y * -45}px, 50px)`;
+      }
+
       rafRef.current = requestAnimationFrame(animate);
     }
     rafRef.current = requestAnimationFrame(animate);
@@ -246,39 +262,18 @@ export function Parallax3DBackground() {
       window.removeEventListener("mousemove", handleMouseMove);
       cancelAnimationFrame(rafRef.current);
     };
-  }, [handleMouseMove]);
-
-  const rotateX = mouse.y * -3;  // tilt up/down
-  const rotateY = mouse.x * 3;   // tilt left/right
+  }, []);
 
   return (
-    <div className="parallax-scene fixed inset-0 pointer-events-none z-0" style={{ perspective: "1200px" }}>
+    <div ref={sceneRef} className="parallax-scene fixed inset-0 pointer-events-none z-0" style={{ perspective: "1200px" }}>
       {/* Deep background stars layer — moves slowly (far away) */}
-      <div
-        className="absolute inset-0 stars-bg-deep"
-        style={{
-          transform: `translate3d(${mouse.x * -8}px, ${mouse.y * -8}px, -100px) rotateX(${rotateX * 0.3}deg) rotateY(${rotateY * 0.3}deg)`,
-          transition: "transform 0.1s ease-out",
-        }}
-      />
+      <div className="absolute inset-0 stars-bg-deep" style={{ willChange: "transform", transition: "transform 0.1s ease-out" }} />
 
       {/* Mid-layer stars — moves moderately */}
-      <div
-        className="absolute inset-0 stars-bg-mid"
-        style={{
-          transform: `translate3d(${mouse.x * -18}px, ${mouse.y * -18}px, -50px) rotateX(${rotateX * 0.5}deg) rotateY(${rotateY * 0.5}deg)`,
-          transition: "transform 0.1s ease-out",
-        }}
-      />
+      <div className="absolute inset-0 stars-bg-mid" style={{ willChange: "transform", transition: "transform 0.1s ease-out" }} />
 
       {/* Near-layer floating orbs — moves more (close to viewer) */}
-      <div
-        className="absolute inset-0"
-        style={{
-          transform: `translate3d(${mouse.x * -30}px, ${mouse.y * -30}px, 0px) rotateX(${rotateX * 0.8}deg) rotateY(${rotateY * 0.8}deg)`,
-          transition: "transform 0.1s ease-out",
-        }}
-      >
+      <div className="absolute inset-0" style={{ willChange: "transform", transition: "transform 0.1s ease-out" }}>
         {/* Faint nebula-like blobs */}
         <div className="absolute w-80 h-80 rounded-full bg-wizard-purple/10 blur-3xl top-1/4 left-1/4" />
         <div className="absolute w-64 h-64 rounded-full bg-wizard-gold/5 blur-3xl top-2/3 right-1/4" />
@@ -286,13 +281,7 @@ export function Parallax3DBackground() {
       </div>
 
       {/* Foreground subtle sparkle dots — moves most */}
-      <div
-        className="absolute inset-0 stars-bg-near"
-        style={{
-          transform: `translate3d(${mouse.x * -45}px, ${mouse.y * -45}px, 50px)`,
-          transition: "transform 0.1s ease-out",
-        }}
-      />
+      <div className="absolute inset-0 stars-bg-near" style={{ willChange: "transform", transition: "transform 0.1s ease-out" }} />
     </div>
   );
 }

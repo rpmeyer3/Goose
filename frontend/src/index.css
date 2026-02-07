@@ -95,8 +95,6 @@
 }
 
 /* Typewriter cursor */
-
-/* Typewriter cursor */
 .typewriter-cursor::after {
   content: '|';
   animation: blink 0.8s step-end infinite;
