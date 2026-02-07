@@ -158,6 +158,9 @@ export default function Budget({ data }) {
       {/* 1. Gemini AI Advisor Section */}
       {advisor_summary && <AdvisorSection summary={advisor_summary} />}
 
+      <h1 className="text-3xl font-display font-bold mb-8 text-wizard-gold drop-shadow-[0_0_12px_rgba(212,168,67,0.4)]">
+          💲 Breakdown
+      </h1>
       {/* 2. Top-level Stat Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-6">
         <StatCard

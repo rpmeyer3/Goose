@@ -89,14 +89,15 @@ async def analyze_statement(file: UploadFile = File(...)):
                 f"You are a Gringotts Bank Manager. Analyze this spending: "
                 f"Spent {metrics['total_spent']} Galleons, mostly on {top_cat}. "
                 f"Remaining in Vault: {metrics['left_over']} Galleons. "
-                f"Give a witty 2-3 sentence summary and 1 wizarding saving tip. "
+                f"Give a witty 2 sentence summary and 1 wizarding saving tip. "
                 f"End with an encouraging wizard slogan that is fun and memorable."
+                "Do not use markup!"
             )
 
             # API Call using the modern SDK
             # Note: Using gemini-1.5-flash for broader quota stability
             response = client.models.generate_content(
-                model="gemini-1.5-flash",
+                model="gemini-2.5-flash",
                 contents=prompt
             )
 

@@ -1,22 +1,16 @@
 from google import genai
-from dotenv import load_dotenv
 import os
+from dotenv import load_dotenv
 
 load_dotenv()
-
-api_key = os.getenv("GEMINI_API_KEY")
-client = genai.Client(api_key=api_key)
-
-if api_key:
-    print(f"Key loaded! Starts with: {api_key[:8]}...")
-else:
-    print("❌ ERROR: Key is empty. Check your .env file naming.")
+client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 try:
+    # Use gemini-2.5-flash or the preview of gemini-3-flash
     response = client.models.generate_content(
-        model="gemini-2.0-flash", # <--- Changed from gemini-1.5-flash
+        model="gemini-2.5-flash",
         contents="Say 'The vault is open!'"
     )
-    print(response.text)
+    print(f"Success: {response.text}")
 except Exception as e:
     print(f"Connection Failed: {e}")
