@@ -204,6 +204,8 @@ Based on their spending habits and question, provide personalized, practical fin
         
         print(f"Gemini response received: {text_response[:100]}...")
 
+        return JSONResponse(content={"response": text_response})
+
     except Exception as e:
         print(f"Chat Error: {e}")
         traceback.print_exc()
