@@ -5,19 +5,16 @@ const MEMBERS = [
   {
     name: "Igor Goncalves",
     role: "Dark Arts of Data",
-    desc: "Conjured the Naive Bayes classification enchantment that sorts every Galleon into its rightful category.",
     emoji: "🧙‍♂️",
   },
   {
     name: "Jordan Delp",
     role: "Keeper of the Backend",
-    desc: "Forged the FastAPI cauldron, PDF extraction spell, and the data processing incantations.",
     emoji: "⚗️",
   },
   {
     name: "Ryan Meyer",
     role: "Charm of the Interface",
-    desc: "Enchanted the React scroll-face, summoning flow, and vault visualization chamber.",
     emoji: "✨",
   },
 ];
@@ -85,7 +82,6 @@ export default function About() {
                 </motion.div>
                 <h3 className="font-display font-semibold text-base text-parchment">{m.name}</h3>
                 <p className="text-xs text-wizard-gold font-display font-medium mb-2">{m.role}</p>
-                <p className="text-sm text-parchment/50 leading-relaxed font-serif">{m.desc}</p>
               </div>
             </TiltCard>
           </StaggerItem>
