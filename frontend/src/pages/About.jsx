@@ -4,17 +4,17 @@ import { FadeInSection, StaggerContainer, StaggerItem, TiltCard } from "../compo
 const MEMBERS = [
   {
     name: "Igor Goncalves",
-    role: "Dark Arts of Data",
+    github: "https://github.com/Ig0rGon",
     emoji: "🧙‍♂️",
   },
   {
     name: "Jordan Delp",
-    role: "Keeper of the Backend",
+    github: "https://github.com/Jordan-Delp",
     emoji: "⚗️",
   },
   {
     name: "Ryan Meyer",
-    role: "Charm of the Interface",
+    github: "https://github.com/rpmeyer3",
     emoji: "✨",
   },
 ];
@@ -81,7 +81,7 @@ export default function About() {
                   {m.emoji}
                 </motion.div>
                 <h3 className="font-display font-semibold text-base text-parchment">{m.name}</h3>
-                <p className="text-xs text-wizard-gold font-display font-medium mb-2">{m.role}</p>
+                <a href={m.github} target="_blank" rel="noopener noreferrer" className="text-xs text-wizard-gold font-display font-medium hover:text-wizard-gold-light transition-colors">GitHub ↗</a>
               </div>
             </TiltCard>
           </StaggerItem>
