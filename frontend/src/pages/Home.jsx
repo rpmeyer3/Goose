@@ -218,29 +218,7 @@ export default function Home({ setAnalysisData }) {
         </motion.button>
       </FadeInSection>
 
-      {/* Feature highlights */}
-      <FadeInSection delay={0.6}>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mt-10 sm:mt-14">
-          {[
-            { icon: "🔐", title: "Secure", desc: "Scrolls vanish after analysis" },
-            { icon: "🤖", title: "ML Powered", desc: "Sorting charm AI" },
-            { icon: "⚡", title: "Instant", desc: "Results in seconds" },
-          ].map((f, i) => (
-            <motion.div
-              key={f.title}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.8 + i * 0.15 }}
-              whileHover={{ y: -5, transition: { duration: 0.2 } }}
-              className="spell-card rounded-xl p-4 text-center"
-            >
-              <div className="text-2xl mb-2">{f.icon}</div>
-              <p className="font-display text-xs font-semibold text-wizard-gold mb-1">{f.title}</p>
-              <p className="text-xs text-parchment/40 font-serif">{f.desc}</p>
-            </motion.div>
-          ))}
-        </div>
-      </FadeInSection>
+
     </div>
   );
 }
