@@ -35,3 +35,6 @@ dist/
 build/
 *.pkl
 frontend/.env.local.example
+
+# Claude Code
+.claude/

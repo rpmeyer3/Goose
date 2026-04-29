@@ -6,6 +6,15 @@ A full-stack, wizarding-themed bank statement analyzer built at **UGA Hacks 11**
 
 <br>
 
+## Highlights
+
+- **Built** a wizarding-themed bank statement analyzer that parses uploaded PDFs, classifies transactions into 10 spending categories using a Naive Bayes ML classifier (TF-IDF + Multinomial NB), and delivers AI-generated financial advice via Google Gemini with ElevenLabs text-to-speech narration.
+- **Integrated** Supabase Auth (PKCE + Row Level Security) with a React 18 frontend featuring drag-and-drop upload, gamified wizard-rank progression (Muggle → Order of Merlin), and a mobile-first responsive design with Framer Motion animations.
+- **Deployed** on Vercel (frontend) and Render (backend) with a FastAPI service layer handling PDF extraction via `pdfplumber`, ML inference, and Gemini API orchestration.
+- **Stack:** React · FastAPI · scikit-learn · Google Gemini · Supabase · ElevenLabs · Vercel · Render
+
+<br>
+
 ## Team
 
 | Member | Role |
