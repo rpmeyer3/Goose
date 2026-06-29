@@ -1,6 +1,6 @@
 # Byte's Bank
 
-A full-stack, wizarding-themed bank statement analyzer built at **UGA Hacks 11**. Upload a PDF bank statement and instantly get a categorized spending breakdown powered by machine learning, AI-generated financial advice from the Gringotts Advisor, and a personal financial dashboard — all wrapped in a magical UI.
+A full-stack, wizarding-themed bank statement analyzer built at **UGA Hacks 11**. Upload a PDF bank statement and instantly get a categorized spending breakdown powered by machine learning, AI-generated financial advice from the Gringotts Advisor, and a personal financial dashboard, all wrapped in a magical UI.
 
 **Live Demo:** [byte-bank-mauve.vercel.app](https://byte-bank-mauve.vercel.app)
 
@@ -27,15 +27,15 @@ A full-stack, wizarding-themed bank statement analyzer built at **UGA Hacks 11**
 
 ## Features
 
-- **PDF Statement Analysis** — Drag-and-drop upload, automatic text extraction, transaction parsing, and ML-powered categorization
-- **AI Financial Advisor** — Gemini-powered chat that gives personalized spending advice based on your data
-- **Audio Summaries** — ElevenLabs text-to-speech for financial summaries
-- **User Authentication** — Supabase Auth with PKCE flow (sign up, sign in, sign out)
-- **Profile Management** — Edit name, phone, avatar, currency, budget goals, notification preferences
-- **Statement Archive** — Browse, inspect, and delete previously analyzed statements stored in Supabase
-- **Financial Dashboard** — Aggregated income/expenses/balance, budget & savings progress bars, top spending categories, wizard rank progression
-- **Gamification** — Wizard rank system (Muggle → Order of Merlin) based on analysis count and streak tracking
-- **Responsive Design** — Mobile-first with Tailwind CSS, Framer Motion animations, and a custom wand cursor
+- **PDF Statement Analysis:** Drag-and-drop upload, automatic text extraction, transaction parsing, and ML-powered categorization
+- **AI Financial Advisor:** Gemini-powered chat that gives personalized spending advice based on your data
+- **Audio Summaries:** ElevenLabs text-to-speech for financial summaries
+- **User Authentication:** Supabase Auth with PKCE flow (sign up, sign in, sign out)
+- **Profile Management:** Edit name, phone, avatar, currency, budget goals, notification preferences
+- **Statement Archive:** Browse, inspect, and delete previously analyzed statements stored in Supabase
+- **Financial Dashboard:** Aggregated income/expenses/balance, budget & savings progress bars, top spending categories, wizard rank progression
+- **Gamification:** Wizard rank system (Muggle → Order of Merlin) based on analysis count and streak tracking
+- **Responsive Design:** Mobile-first with Tailwind CSS, Framer Motion animations, and a custom wand cursor
 
 <br>
 
@@ -219,9 +219,9 @@ The dev server starts at `http://localhost:5173` and proxies `/api/*` requests t
 
 Upload a PDF bank statement for analysis.
 
-**Request** — `multipart/form-data` with a `file` field (PDF only).
+**Request:** `multipart/form-data` with a `file` field (PDF only).
 
-**Response** — `200 OK`
+**Response:** `200 OK`
 
 ```json
 {
@@ -250,7 +250,7 @@ Upload a PDF bank statement for analysis.
 
 Send a message to the AI financial advisor.
 
-**Request** — JSON
+**Request:** JSON
 
 ```json
 {
@@ -260,7 +260,7 @@ Send a message to the AI financial advisor.
 }
 ```
 
-**Response** — `200 OK` — AI-generated financial advice text.
+**Response:** `200 OK`. AI-generated financial advice text.
 
 <br>
 
@@ -292,10 +292,10 @@ Update **Authentication → URL Configuration**:
 
 The `supabase_schema.sql` file creates:
 
-- **`profiles`** — User profiles (name, avatar, currency, budget goals, wizard rank, streak, notifications). Auto-created on signup via trigger.
-- **`bank_statements`** — Parsed statement data (bank name, transactions JSONB, totals, category spending, AI summary). Wizard rank auto-updates on insert.
-- **Row Level Security** — Users can only read/write their own data.
-- **Triggers** — `updated_at` auto-refresh, auto-profile creation, wizard rank progression.
+- **`profiles`:** User profiles (name, avatar, currency, budget goals, wizard rank, streak, notifications). Auto-created on signup via trigger.
+- **`bank_statements`:** Parsed statement data (bank name, transactions JSONB, totals, category spending, AI summary). Wizard rank auto-updates on insert.
+- **Row Level Security:** Users can only read/write their own data.
+- **Triggers:** `updated_at` auto-refresh, auto-profile creation, wizard rank progression.
 
 <br>
 
