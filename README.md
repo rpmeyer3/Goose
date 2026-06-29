@@ -78,8 +78,8 @@ A full-stack, wizarding-themed bank statement analyzer built at **UGA Hacks 11**
 
 ```
 ├── backend/
-│   ├── main.py                  # FastAPI server — /api/analyze-statement, /api/chat
-│   ├── pipeline.py              # Data pipeline — extraction, cleaning, classification, metrics
+│   ├── main.py                  # FastAPI server: /api/analyze-statement, /api/chat
+│   ├── pipeline.py              # Data pipeline: extraction, cleaning, classification, metrics
 │   ├── train_model.py           # Trains the Naive Bayes model, saves .pkl files
 │   ├── test_gemini.py           # Gemini API integration tests
 │   └── test_eleven_labs.py      # ElevenLabs TTS tests
@@ -97,19 +97,19 @@ A full-stack, wizarding-themed bank statement analyzer built at **UGA Hacks 11**
 │       ├── demoData.js          # Sample data for offline demo
 │       ├── supabase/
 │       │   ├── client.js        # Supabase client (PKCE flow)
-│       │   └── AuthContext.jsx  # Auth context — session, profile, sign in/out/up
+│       │   └── AuthContext.jsx  # Auth context: session, profile, sign in/out/up
 │       ├── components/
 │       │   ├── Navbar.jsx       # Sticky nav with Lucide icons, auth state
 │       │   ├── Footer.jsx       # Three-column responsive footer
-│       │   ├── ProtectedRoute.jsx # Route guard — redirects to /login
+│       │   ├── ProtectedRoute.jsx # Route guard: redirects to /login
 │       │   ├── MagicEffects.jsx # Particles, parallax, typewriter animations
 │       │   └── LoadingOverlay.jsx # Full-screen loading during upload
 │       └── pages/
 │           ├── Home.jsx         # Drag-and-drop PDF upload
 │           ├── Budget.jsx       # Spending breakdown, charts, transaction table
 │           ├── Chat.jsx         # AI financial advisor chat
-│           ├── Dashboard.jsx    # Financial Rundown — aggregated stats
-│           ├── Statements.jsx   # Statement archive — list, detail, delete
+│           ├── Dashboard.jsx    # Financial Rundown: aggregated stats
+│           ├── Statements.jsx   # Statement archive: list, detail, delete
 │           ├── Profile.jsx      # Edit profile + preferences (tabbed)
 │           ├── Login.jsx        # Sign in form
 │           ├── Signup.jsx       # Sign up form
